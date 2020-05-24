@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const Movie = new Schema(
     {
-        title: {type: String, required: true},
+        title: {type: String, required: true, minlength: 2},
         genre: {type: String},
         country: {type: String},
         year: {type: String},

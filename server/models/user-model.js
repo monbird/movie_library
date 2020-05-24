@@ -10,18 +10,23 @@ const User = new Schema(
         name: {
             type: String,
             required: 'Name is required',
+            minlength: 3,
+            maxlength: 50
         },
         email: {
             type: String,
             trim: true,
             lowercase: true,
             unique: true,
+            minlength: 5,
+            maxlength: 50,
             required: 'Email address is required',
             match: [email_regex, 'Please fill a valid email address']
         },
         password: {
             type: String,
-            required: 'Password is required'
+            required: 'Password is required',
+            minlength: 5
         },
         movies: {
             type: [Movie]
