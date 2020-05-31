@@ -13,13 +13,15 @@ const Movie = new Schema(
         cast: {type: String},
         director: {type: String},
         comments: {type: String},
-        type: {type: String},
+        type: {type: String, enum: ['movie', 'series']},
         is_watched: {type: Boolean},
         imdb_id: {type: String},
         rating_imdb: {type: String},
-        rating_rotten_tomatoes: {type: String},
+        rating_rt: {type: String},
         rating_filmweb: {type: String},
-        poster: {type: String}
+        poster: {type: String},
+        platform: {type: String},
+        plot: {type: String}
     },
     { timestamps: true },
 );
