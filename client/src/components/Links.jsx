@@ -1,43 +1,36 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import React, { Component } from 'react';
 
-const Collapse = styled.div.attrs({
-    className: 'collpase navbar-collapse',
-})``
-
-const List = styled.div.attrs({
-    className: 'navbar-nav mr-auto',
-})``
-
-const Item = styled.div.attrs({
-    className: 'collpase navbar-collapse',
-})``
+import { NavLink } from 'react-router-dom';
 
 class Links extends Component {
     render() {
         return (
-            <React.Fragment>
-                <Link to="/" className="navbar-brand">
-                    My first MERN Application
-                </Link>
-                <Collapse>
-                    <List>
-                        <Item>
-                            <Link to="/movies/list" className="nav-link">
-                                List Movies
-                            </Link>
-                        </Item>
-                        <Item>
-                            <Link to="/movies/create" className="nav-link">
-                                Create Movie
-                            </Link>
-                        </Item>
-                    </List>
-                </Collapse>
-            </React.Fragment>
-        )
+            <div className="collpase navbar-collapse">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                        <NavLink to="/movies" className="nav-link" activeClassName="active">
+                            Movies
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/series" className="nav-link" activeClassName="active">
+                            Series
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/user/register" className="nav-link" activeClassName="active">
+                            Register
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/user/login" className="nav-link" activeClassName="active">
+                            Sign In
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+        );
     }
 }
 
-export default Links
+export default Links;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import api from '../api'
+import apis from '../api'
 
 import styled from 'styled-components'
 
@@ -70,7 +70,7 @@ class MoviesUpdate extends Component {
         const arrayTime = time.split('/')
         const payload = { name, rating, time: arrayTime }
 
-        await api.updateMovieById(id, payload).then(res => {
+        await apis.updateMovieById(id, payload).then(res => {
             window.alert(`Movie updated successfully`)
             this.setState({
                 name: '',
@@ -82,7 +82,7 @@ class MoviesUpdate extends Component {
 
     componentDidMount = async () => {
         const { id } = this.state
-        const movie = await api.getMovieById(id)
+        const movie = await apis.getMovieById(id)
 
         this.setState({
             name: movie.data.data.name,
@@ -95,7 +95,7 @@ class MoviesUpdate extends Component {
         const { name, rating, time } = this.state
         return (
             <Wrapper>
-                <Title>Create Movie</Title>
+                <Title>Update Movie</Title>
 
                 <Label>Name: </Label>
                 <InputText

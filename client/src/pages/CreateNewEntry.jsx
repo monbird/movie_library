@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import api from '../api'
+import apis from '../api'
 
 import styled from 'styled-components'
 
@@ -69,7 +69,7 @@ class MoviesInsert extends Component {
         const arrayTime = time.split('/')
         const payload = { name, rating, time: arrayTime }
 
-        await api.insertMovie(payload)
+        await apis.insertMovie(payload)
             .then(res => {
                 window.alert(res.data.message);
                 this.setState({

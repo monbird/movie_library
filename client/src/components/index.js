@@ -1,5 +1,7 @@
-import Links from './Links'
-import Logo from './Logo'
 import NavBar from './NavBar'
+import ActionButtons from './ActionButtons'
+import Footer from './Footer'
+import Filters from './Filters'
+import Card from './Card'
 
-export { Links, Logo, NavBar }
+export { NavBar, ActionButtons, Footer, Filters, Card };
