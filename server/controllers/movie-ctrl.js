@@ -1,6 +1,8 @@
 const User = require('../models/user-model');
 const Movie = require('../models/movie-model').model;
 
+const moment = require('moment');
+
 createMovieOrSeries = async (req, res) => {
     const body = req.body;
 
@@ -153,7 +155,14 @@ getAllMovies = async (req, res) => {
                 });
             }
 
-            let movies = user.movies.filter((movie) => movie.type === 'movie');
+            let movies = user.movies.filter((movie) => movie.type === 'movie').sort(
+                (movie1, movie2) => {
+                    let movie1CreatedAt = parseInt(moment(movie1.createdAt).format('X'));
+                    let movie2CreatedAt = parseInt(moment(movie2.createdAt).format('X'));
+                    return movie2CreatedAt - movie1CreatedAt;
+                }
+            );
+
             if(movies.length > 0) {
                 return res.status(200).json({
                     success: true,
@@ -184,7 +193,14 @@ getAllSeries = async (req, res) => {
                 });
             }
 
-            let series = user.movies.filter((movie) => movie.type === 'series');
+            let series = user.movies.filter((movie) => movie.type === 'series').sort(
+                (movie1, movie2) => {
+                    let movie1CreatedAt = parseInt(moment(movie1.createdAt).format('X'));
+                    let movie2CreatedAt = parseInt(moment(movie2.createdAt).format('X'));
+                    return movie2CreatedAt - movie1CreatedAt;
+                }
+            );
+
             if(series.length > 0) {
                 return res.status(200).json({
                     success: true,
