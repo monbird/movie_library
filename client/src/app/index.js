@@ -5,6 +5,7 @@ import { NavBar, Footer } from '../components';
 import { MoviesList } from '../pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import '../style/custom.css';
 
 function App() {

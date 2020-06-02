@@ -1,7 +1,7 @@
-import NavBar from './NavBar'
-import ActionButtons from './ActionButtons'
-import Footer from './Footer'
-import Filters from './Filters'
-import Card from './Card'
+import NavBar from './NavBar';
+import { AddNewButton, PickRandomButton } from './ActionButtons';
+import Footer from './Footer';
+import Filters from './Filters';
+import Card from './Card';
 
-export { NavBar, ActionButtons, Footer, Filters, Card };
+export { NavBar, AddNewButton, PickRandomButton, Footer, Filters, Card };
