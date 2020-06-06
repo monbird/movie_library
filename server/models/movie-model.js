@@ -16,9 +16,9 @@ const Movie = new Schema(
         type: {type: String, enum: ['movie', 'series']},
         is_watched: {type: Boolean},
         imdb_id: {type: String},
-        rating_imdb: {type: String},
-        rating_rt: {type: String},
-        rating_filmweb: {type: String},
+        rating_imdb: {type: Number},
+        rating_rt: {type: Number},
+        rating_fw: {type: Number},
         poster: {type: String},
         platform: {type: String},
         plot: {type: String}
