@@ -23,14 +23,14 @@ createMovieOrSeries = async (req, res) => {
             .then(() => {
                 return res.status(201).json({
                     success: true,
-                    message: 'Movie created!',
+                    message: 'Title created!',
                     data: movie
                 });
             })
             .catch(error => {
                 return res.status(400).json({
                     success: false,
-                    message: 'Movie not created!',
+                    message: 'Validation failed!',
                     error
                 });
             });
@@ -68,19 +68,19 @@ updateMovieOrSeries = async (req, res) => {
         if (error && error.name == 'ValidationError') {
             return res.status(400).json({
                 success: false,
-                message: 'Movie not updated!',
+                message: 'Validation failed!',
                 error
             });
         } else if (error || !user) {
             return res.status(404).json({
                 success: false,
-                message: 'User or movie not found!',
+                message: 'User or title not found!',
                 error
             });
         } else {
             return res.status(200).json({
                 success: true,
-                message: 'Movie updated!',
+                message: 'Title updated!',
                 data: user.movies.filter(movie => movie._id == req.params.movie_id)[0]
             });
         }
@@ -100,13 +100,13 @@ deleteMovieOrSeries = async (req, res) => {
         if (error || !user) {
             return res.status(404).json({
                 success: false,
-                message: 'User or movie not found!',
+                message: 'User or title not found!',
                 error
             });
         }
         return res.status(200).json({
             success: true,
-            message: 'Movie deleted!',
+            message: 'Title deleted!',
             data: user.movies.filter(movie => movie._id == req.params.movie_id)[0]
         });
     })
@@ -129,13 +129,13 @@ getMovieOrSeriesById = async (req, res) => {
             if (error || !user) {
                 return res.status(404).json({
                     success: false,
-                    message: 'User or movie not found!',
+                    message: 'User or title not found!',
                     error
                 });
             }
             return res.status(200).json({
                 success: true,
-                message: 'Movie found!',
+                message: 'Title found!',
                 data: user.movies[0]
             });
     });
