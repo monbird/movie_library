@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-
-import logo from '../images/favicon.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 class Logo extends Component {
     render() {
         return (
-            <a className="navbar-brand" href="/">
-                <img src={logo} width="50" height="50" alt="logo" />
-                <p>My Watchlist</p>
-            </a>
+            <div className="navbar-brand">
+                <FontAwesomeIcon icon={faFilm} size ="3x" className="d-inline-block align-middle"/>
+                <p id="logo-name" className="d-inline align-middle">My Watchlist</p>
+                <FontAwesomeIcon icon={faFilm} size ="3x" className="d-inline-block align-middle"/>
+            </div>
         );
     }
 }

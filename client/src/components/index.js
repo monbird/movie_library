@@ -1,7 +1,6 @@
 import NavBar from './NavBar';
-import { AddNewButton, PickRandomButton } from './ActionButtons';
 import Footer from './Footer';
-import Filters from './Filters';
-import Card from './Card';
+import CardList from './CardList';
+import CreateNewForm from './CreateNewForm';
 
-export { NavBar, AddNewButton, PickRandomButton, Footer, Filters, Card };
+export { NavBar, Footer, CardList, CreateNewForm };

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { UpadateButton, DeleteButton, SwitchButton } from './ActionButtons';
 import Ratings from './Ratings';
+import Img from './Img'
+import poster_placeholder from '../images/poster-placeholder.png';
+
 
 class CardBack extends Component {
     render() {
@@ -20,7 +25,7 @@ class CardBack extends Component {
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-4">
-                                            <img src={this.props.data.poster} alt="poster" className="poster"></img>
+                                            <Img className="poster-back" src={this.props.data.poster} alt="Poster" imgAlt={poster_placeholder} />
                                         </div>
                                         <div className="col-8">
                                             <div className="row">
@@ -52,14 +57,26 @@ class CardBack extends Component {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <SwitchButton data={this.props.data} refresher={this.props.refresher}/>
-                                <a href="#" type="button" className="btn btn-info" data-dismiss="modal">Edit</a>
-                                <button type="button" className="btn btn-danger" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>Delete</button>
+                                <div className="row width-100">
+                                    <div className="col-6">
+                                        <SwitchButton data={this.props.data} refresher={this.props.refresher} showText={true}/>
+                                    </div>
+                                    <div className="col-3">
+                                        <a href="#" type="button" className="btn btn-info width-100" data-dismiss="modal">
+                                            Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
+                                        </a>
+                                    </div>
+                                    <div className="col-3">
+                                        <button type="button" className="btn btn-danger width-100" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>
+                                            Delete&nbsp;&nbsp;<FontAwesomeIcon icon={faTrash} />
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="modal" tabIndex="2" role="dialog" id={`modal-confirm-${this.props.data._id}`}>
+                <div className="modal fade" tabIndex="2" role="dialog" id={`modal-confirm-${this.props.data._id}`}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -72,8 +89,8 @@ class CardBack extends Component {
                                     <p>You are about to delete <b>{this.props.data.title}</b>.</p>
                             </div>
                             <div className="modal-footer">
-                                <DeleteButton data={this.props.data} refresher={this.props.refresher}/>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <DeleteButton data={this.props.data} refresher={this.props.refresher}/>
                             </div>
                         </div>
                     </div>

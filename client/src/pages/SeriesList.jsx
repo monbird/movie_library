@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { CardList } from '../components'
 
-class MoviesList extends Component {
+class SeriesList extends Component {
     render() {
         return (
-            <CardList type="movie"/>
+            <CardList type="series"/>
         );
     }
 }
 
-export default MoviesList;
+export default SeriesList;
