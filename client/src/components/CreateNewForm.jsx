@@ -31,7 +31,6 @@ class CreateNewForm extends Component {
             rating_fw: '',
             comments: '',
             is_watched: false,
-            message: '',
             redirectSuccess: false
         }
 
@@ -56,6 +55,15 @@ class CreateNewForm extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
+        event.stopPropagation();
+
+        let form = $('#create-new-form')[0];
+        form.classList.add('was-validated');
+
+        if (form.checkValidity() === false) {       
+            return;
+        }
+
         let payload = {
             title: this.state.title,
             year: this.state.year,
@@ -122,7 +130,7 @@ class CreateNewForm extends Component {
                             </p>
                         </div>
                     </div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} className="needs-validation" id="create-new-form" noValidate>
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group">
@@ -130,7 +138,10 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">*Title:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="title" placeholder="your title.." name="title" onChange={this.handleChange} autoFocus/>
+                                        <input type="text" className="form-control" id="title" placeholder="enter title.." name="title" onChange={this.handleChange} autoFocus required minLength="2"/>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid title - minimum 2 characters long.
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -138,7 +149,10 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Year:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="year" placeholder="your year.." name="year" onChange={this.handleChange}/>
+                                        <input type="number" className="form-control" id="year" placeholder="enter year.." name="year" min="1800" max="2500" onChange={this.handleChange}/>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid year.
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -146,7 +160,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Genre:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="genre" placeholder="your genre.." name="genre" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="genre" placeholder="enter genre.." name="genre" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -154,7 +168,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Country:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="country" placeholder="your country.." name="country" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="country" placeholder="enter country.." name="country" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -162,7 +176,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Language:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="language" placeholder="your language.." name="language" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="language" placeholder="enter language.." name="language" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -170,7 +184,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Director:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="director" placeholder="your director.." name="director" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="director" placeholder="enter director.." name="director" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -178,7 +192,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Cast:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="cast" placeholder="your cast.." name="cast" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="cast" placeholder="enter cast.." name="cast" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -186,7 +200,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Runtime:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="runtime" placeholder="your runtime.." name="runtime" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="runtime" placeholder="enter runtime.." name="runtime" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -194,7 +208,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Platform:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="platform" placeholder="your platform.." name="platform" onChange={this.handleChange}/>
+                                        <input type="text" className="form-control" id="platform" placeholder="enter platform.." name="platform" onChange={this.handleChange}/>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +218,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Plot:</span>
                                         </div>
-                                        <textarea className="form-control" id="plot" placeholder="your plot.." name="plot" onChange={this.handleChange} rows="5"></textarea>
+                                        <textarea className="form-control" id="plot" placeholder="enter plot.." name="plot" onChange={this.handleChange} rows="5"></textarea>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -218,7 +232,10 @@ class CreateNewForm extends Component {
                                                             <img src={icon_imdb} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="title" placeholder="rating.." name="rating_imdb" onChange={this.handleChange}/>
+                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_imdb" min="0" max="10" step="0.1" onChange={this.handleChange}/>
+                                                    <div class="invalid-feedback">
+                                                        Please provide a valid rating (0-10).
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,7 +247,10 @@ class CreateNewForm extends Component {
                                                             <img src={icon_rt} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="title" placeholder="rating.." name="rating_rt" onChange={this.handleChange}/>
+                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_rt" min="0" max="100" step="1" onChange={this.handleChange}/>
+                                                    <div class="invalid-feedback">
+                                                        Please provide a valid rating (0-100).
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +262,10 @@ class CreateNewForm extends Component {
                                                             <img src={icon_fw} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="text" className="form-control" id="title" placeholder="rating.." name="rating_fw" onChange={this.handleChange}/>
+                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_fw" min="0" max="10" step="0.1" onChange={this.handleChange}/>
+                                                    <div class="invalid-feedback">
+                                                        Please provide a valid rating (0-10).
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -253,7 +276,7 @@ class CreateNewForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Comments:</span>
                                         </div>
-                                        <textarea className="form-control" id="comments" placeholder="your comments.." name="comments" onChange={this.handleChange} rows="4"></textarea>
+                                        <textarea className="form-control" id="comments" placeholder="enter comments.." name="comments" onChange={this.handleChange} rows="4"></textarea>
                                     </div>
                                 </div>
                                 <div className="form-group">
