@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 import $ from 'jquery';
-import apis from '../api'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 import icon_imdb from '../images/icon-imdb.png';
 import icon_rt from '../images/icon-rt.png';
 import icon_fw from '../images/icon-fw.png';
 import { SwitchButton } from './ActionButtons';
-
+import apis from '../api';
 
 class CreateNewForm extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class CreateNewForm extends Component {
     handleChange = async (event) => {
         let nam = event.target.name;
         let val = event.target.value;
-        await this.setState({[nam]: val});        //brackets?
+        await this.setState({[nam]: val});
     }
 
     handleSwitchBtn = async (checked) => {
@@ -79,15 +79,24 @@ class CreateNewForm extends Component {
         }
 
         await apis.createMovieOrSeries(payload)
-            .then(res => {
+            .then(() => {
                 this.setState({
                     redirectSuccess: true,
-                    message: res.data.message
                 });
+
+                let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
+                let msg = '👍 ' + typeTitle + ' "' + payload.title + '" created!';
+                toast.success(msg);
             })
-            .catch(err => {
-                // alert(err.response.data.message);
-                this.setState({message: err.response.data.message});
+            .catch(error => {
+                let msg = null;
+                if(error.response && error.response.data) {
+                    msg = '👎 Could not add ' + payload.type + ": " + error.response.data.message;
+                } else {
+                    let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
+                    msg = '👎 ' + typeTitle + ' not created!\n';
+                }
+                toast.error(msg);
             });
     }
 
@@ -95,8 +104,7 @@ class CreateNewForm extends Component {
         if(this.state.redirectSuccess) {
             return (
                 <Redirect to={{
-                    pathname: '/' + this.state.type_plural,
-                    state: { message: this.state.message }
+                    pathname: '/' + this.state.type_plural
                 }} /> 
             )
         } else {

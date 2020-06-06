@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import $ from "jquery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faQuestion, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faQuestion, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 import apis from '../api';
-
 
 class AddNewButton extends Component {
     render() {
@@ -41,9 +41,24 @@ class UpadateButton extends Component {
 
 class DeleteButton extends Component {
     deleteAction = () => {
-        apis.deleteMovieOrSeries(this.props.data._id).then(() => {
+        apis.deleteMovieOrSeries(this.props.data._id)
+        .then((response) => {
             $('.modal').modal('hide');
             this.props.refresher({});
+
+            let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
+            let msg = '👍 ' + typeTitle + ' "' + response.data.data.title + '" deleted!\n';
+            toast.success(msg);
+        })
+        .catch((error) => {
+            let msg = null;
+            if(error.response && error.response.data) {
+                msg = '👎 Could not delete ' + this.props.data.type + ': ' + error.response.data.message;
+            } else {
+                let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
+                msg = '👎 ' + typeTitle + ' not deleted!\n';
+            }
+            toast.error(msg);
         });
     }
 

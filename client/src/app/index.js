@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { NavBar, Footer } from '../components';
 import { MoviesList, SeriesList, MovieCreate, SeriesCreate } from '../pages';
@@ -12,6 +14,17 @@ function App() {
     return (
         <Router>
             <NavBar />
+            <ToastContainer
+                position="top-right"
+                autoClose={6000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <Switch>
                 {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/movies" exact component={MoviesList} />
