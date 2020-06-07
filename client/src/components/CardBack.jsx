@@ -62,9 +62,7 @@ class CardBack extends Component {
                                         <SwitchButton data={this.props.data} refresher={this.props.refresher} showText={true}/>
                                     </div>
                                     <div className="col-3">
-                                        <a href="#" type="button" className="btn btn-info width-100" data-dismiss="modal">
-                                            Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
-                                        </a>
+                                        <UpadateButton data={this.props.data} refresher={this.props.refresher}/>
                                     </div>
                                     <div className="col-3">
                                         <button type="button" className="btn btn-danger width-100" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>

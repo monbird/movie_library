@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { CardForm } from '../components'
 
-class MovieCreate extends Component {
+class MovieUpdate extends Component {
     render() {
         return (
-            <CardForm type="movie"/>
+            <CardForm id={this.props.match.params.id} type="movie" />
         );
     }
 }
 
-export default MovieCreate;
+export default MovieUpdate;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { CreateNewForm } from '../components'
+import { CardForm } from '../components'
 
 class SeriesCreate extends Component {
     render() {
         return (
-            <CreateNewForm type="series"/>
+            <CardForm type="series"/>
         );
     }
 }

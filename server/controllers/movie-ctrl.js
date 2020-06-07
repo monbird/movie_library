@@ -54,11 +54,11 @@ updateMovieOrSeries = async (req, res) => {
             'movies.$.comments': body.comments,
             'movies.$.type': body.type,
             'movies.$.is_watched': body.is_watched,
-            'movies.$.imdb_id': body.imdb_id,
             'movies.$.rating_imdb': body.rating_imdb,
             'movies.$.rating_rt': body.rating_rt,
             'movies.$.rating_fw': body.rating_fw,
             'movies.$.poster': body.poster,
+            'movies.$.imdb_id': body.imdb_id,
         },
     },
     { 

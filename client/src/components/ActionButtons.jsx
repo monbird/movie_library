@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import $ from "jquery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faQuestion, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faQuestion, faEye, faEyeSlash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 
 import apis from '../api';
@@ -32,9 +32,9 @@ class PickRandomButton extends Component {
 class UpadateButton extends Component {
     render() {
         return (
-            <div>
-                <a href="#" className="btn btn-info">Edit</a>
-            </div>
+            <a href={`/${this.props.data.type}/edit/${this.props.data._id}`}  type="button" className="btn btn-info width-100">
+                Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
+            </a>
         );
     }
 }
@@ -47,7 +47,7 @@ class DeleteButton extends Component {
             this.props.refresher({});
 
             let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
-            let msg = '👍 ' + typeTitle + ' "' + response.data.data.title + '" deleted!\n';
+            let msg = '👍 ' + typeTitle + ' "' + response.data.data.title + '" deleted!';
             toast.success(msg);
         })
         .catch((error) => {
@@ -56,7 +56,7 @@ class DeleteButton extends Component {
                 msg = '👎 Could not delete ' + this.props.data.type + ': ' + error.response.data.message;
             } else {
                 let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
-                msg = '👎 ' + typeTitle + ' not deleted!\n';
+                msg = '👎 ' + typeTitle + ' not deleted!';
             }
             toast.error(msg);
         });
