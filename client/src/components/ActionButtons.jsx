@@ -32,7 +32,7 @@ class PickRandomButton extends Component {
 class UpadateButton extends Component {
     render() {
         return (
-            <a href={`/${this.props.data.type}/edit/${this.props.data._id}`}  type="button" className="btn btn-info width-100">
+            <a href={`/${this.props.data.type}/edit/${this.props.data._id}`}  type="button" className="btn btn-info w-100">
                 Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
             </a>
         );

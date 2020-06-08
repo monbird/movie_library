@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import apis from '../api';
 
-import { AddNewButton, PickRandomButton } from './ActionButtons';
-import Filters from './Filters';
 import Card from './Card';
+import CardListControllers from './CardListControllers';
 
 class CardList extends Component {
     constructor(props) {
@@ -37,17 +36,7 @@ class CardList extends Component {
 
         return (
             <div>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12 col-md-6">
-                            <AddNewButton type={this.props.type} />
-                        </div>
-                        <div className="col-12 col-md-6">
-                            <PickRandomButton />
-                        </div>
-                    </div>
-                </div>
-                <Filters data={this.state.movies}/>
+                <CardListControllers data={this.state.movies} type={this.props.type}/>
                 <div className="container">
                     <div className="row">
                         {showCards && this.state.movies.map(movie => (

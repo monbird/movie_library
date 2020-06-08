@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import icon_imdb from '../images/icon-imdb.png';
 import icon_rt from '../images/icon-rt.png';
 import icon_fw from '../images/icon-fw.png';
+import ModalImdb from './ModalImbd';
 import { SwitchButton } from './ActionButtons';
 import apis from '../api';
 
@@ -163,10 +164,11 @@ class CardForm extends Component {
                         <div className="col-12">
                             <p>
                                 Complete the form yourself or&nbsp;
-                                <a href="#" className="btn btn-warning btn-sm">
+                                <button type="button" className="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
                                     <FontAwesomeIcon icon={faAngleDoubleDown} /> fetch data from <b>IMDb </b>
                                     <FontAwesomeIcon icon={faAngleDoubleDown} />
-                                </a>
+                                </button>
+                                <ModalImdb title={this.state.title} year={this.state.year} type={this.props.type}/>
                             </p>
                         </div>
                     </div>
@@ -329,10 +331,10 @@ class CardForm extends Component {
                         </div>
                         <div className="row">
                             <div className="col-6 col-md-3 offset-md-6">
-                                <a href={`/${this.state.type_plural}`} className="btn btn-danger width-100">Cancel</a>
+                                <a href={`/${this.state.type_plural}`} className="btn btn-danger w-100">Cancel</a>
                             </div>
                             <div className="col-6 col-md-3">
-                                <button type="submit" className="btn btn-primary width-100">Save</button>
+                                <button type="submit" className="btn btn-primary w-100">Save</button>
                             </div>
                         </div>
                     </form>

@@ -12,7 +12,7 @@ import poster_placeholder from '../images/poster-placeholder.png';
 class CardFront extends Component {
     render() {
         return (
-            <div className="card">
+            <div className="card shadow">
                 <Img className="card-img-top poster" src={this.props.data.poster} alt="Poster" imgAlt={poster_placeholder} />
                 <div className="card-body">
                     <Ratings data={this.props.data}/>
@@ -24,7 +24,7 @@ class CardFront extends Component {
                     </p>
                     <div className="row">
                         <div className="col-5">
-                            <button type="button" className="btn btn-primary block width-100" data-toggle="modal" data-target={`#modal-${this.props.data._id}`}>
+                            <button type="button" className="btn btn-primary block w-100" data-toggle="modal" data-target={`#modal-${this.props.data._id}`}>
                                 <FontAwesomeIcon icon={faInfo} />
                             </button>
                         </div>

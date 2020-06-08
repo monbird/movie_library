@@ -57,7 +57,7 @@ class CardBack extends Component {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <div className="row width-100">
+                                <div className="row w-100">
                                     <div className="col-6">
                                         <SwitchButton data={this.props.data} refresher={this.props.refresher} showText={true}/>
                                     </div>
@@ -65,7 +65,7 @@ class CardBack extends Component {
                                         <UpadateButton data={this.props.data} refresher={this.props.refresher}/>
                                     </div>
                                     <div className="col-3">
-                                        <button type="button" className="btn btn-danger width-100" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>
+                                        <button type="button" className="btn btn-danger w-100" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>
                                             Delete&nbsp;&nbsp;<FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </div>
