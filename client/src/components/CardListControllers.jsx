@@ -13,7 +13,7 @@ class CardListControllers extends Component {
                             <AddNewButton type={this.props.type} />
                         </div>
                         <div className="col-12 col-md-6">
-                            <PickRandomButton />
+                            <PickRandomButton data={this.props.data} highlightMovie={this.props.highlightMovie}/>
                         </div>
                     </div>
                 </div>

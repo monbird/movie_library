@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-class Img extends Component {
+import poster_placeholder from '../images/poster-placeholder.png';
+
+class PosterImg extends Component {
     constructor (props) {
         super(props);
 
@@ -13,13 +15,11 @@ class Img extends Component {
         const props = {...this.props}; // clone props so we can mutate
 
         if (this.state.error || !props.src) {
-            props.src = props.imgAlt;
+            props.src = poster_placeholder;
         }
-
-        delete props.imgAlt;
 
         return <img {...props} onError={e => this.setState({ error: true })}/>;
     }
 }
 
-export default Img;
+export default PosterImg;

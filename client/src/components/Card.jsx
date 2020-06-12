@@ -27,7 +27,7 @@ class Card extends Component {
             return (
                 <div className="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div>
-                        <CardFront data={this.state.data} refresher={this.refresher}/>
+                        <CardFront data={this.state.data} refresher={this.refresher} highlightedMovieId={this.props.highlightedMovieId}/>
                         <CardBack data={this.state.data} refresher={this.refresher}/>
                     </div>
                 </div>

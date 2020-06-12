@@ -5,15 +5,14 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 
 import { SwitchButton } from './ActionButtons';
 import Ratings from './Ratings';
-import Img from './Img';
-import poster_placeholder from '../images/poster-placeholder.png';
-
+import PosterImg from './PosterImg';
 
 class CardFront extends Component {
     render() {
         return (
-            <div className="card shadow">
-                <Img className="card-img-top poster" src={this.props.data.poster} alt="Poster" imgAlt={poster_placeholder} />
+            <div className={`card shadow ${ this.props.highlightedMovieId == this.props.data._id && 'text-white bg-dark'}`}
+            id={`${this.props.highlightedMovieId == this.props.data._id && 'focused-card' }`}>
+                <PosterImg className="card-img-top poster" src={this.props.data.poster} alt="Poster"/>
                 <div className="card-body">
                     <Ratings data={this.props.data}/>
                     <h5 className="card-title">{this.props.data.title}</h5>

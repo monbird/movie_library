@@ -19,10 +19,17 @@ class AddNewButton extends Component {
 }
 
 class PickRandomButton extends Component {
+    pickRandomAction = () => {
+        let titles = this.props.data;
+        let randomNo = [Math.floor(Math.random() * titles.length)];
+        let randomTitle = titles[randomNo];
+        this.props.highlightMovie(randomTitle._id);
+    }
+
     render() {
         return (
             <div>
-                <a href="#" className="btn btn-secondary"><FontAwesomeIcon icon={faQuestion} /></a>
+                <button onClick={this.pickRandomAction}className="btn btn-secondary"><FontAwesomeIcon icon={faQuestion} /></button>
                 <label>Can't decide? Pick for me!</label>
             </div>
         );

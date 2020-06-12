@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { UpadateButton, DeleteButton, SwitchButton } from './ActionButtons';
 import Ratings from './Ratings';
-import Img from './Img'
-import poster_placeholder from '../images/poster-placeholder.png';
-
+import PosterImg from './PosterImg';
 
 class CardBack extends Component {
     render() {
@@ -25,7 +23,7 @@ class CardBack extends Component {
                                 <div className="container">
                                     <div className="row">
                                         <div className="col-4">
-                                            <Img className="poster-back" src={this.props.data.poster} alt="Poster" imgAlt={poster_placeholder} />
+                                            <PosterImg className="poster-back" src={this.props.data.poster} alt="Poster" />
                                         </div>
                                         <div className="col-8">
                                             <div className="row">
