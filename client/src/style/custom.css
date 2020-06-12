@@ -44,3 +44,7 @@ div.switch.btn {
     padding: 12px;
     font-size: 25px;
 }
+
+.btn-static {
+    cursor: default;
+}

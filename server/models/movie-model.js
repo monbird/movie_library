@@ -19,6 +19,7 @@ const Movie = new Schema(
         rating_imdb: {type: Number, min: 0, max: 10},
         rating_rt: {type: Number, min: 0, max: 100},
         rating_fw: {type: Number, min: 0, max: 10},
+        filmweb_url: {type: String},
         poster: {type: String},
         platform: {type: String},
         plot: {type: String}

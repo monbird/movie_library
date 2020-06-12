@@ -14,6 +14,8 @@ export const getAllSeries = () => api.get('/user/5eca669c7ae575ae9831c4bb/series
 export const getImdbTitles = (payload) => api.post('/imdb/titles', payload);
 export const getImdbTitleDetails = (id) => api.get(`/imdb/title/${id}`);
 
+export const getFilmwebRating = (payload) => api.post('/filmweb/title', payload);
+
 const apis = {
     createMovieOrSeries,
     updateMovieOrSeries,
@@ -22,7 +24,8 @@ const apis = {
     getAllMovies,
     getAllSeries,
     getImdbTitles,
-    getImdbTitleDetails
+    getImdbTitleDetails,
+    getFilmwebRating
 }
 
 export default apis;

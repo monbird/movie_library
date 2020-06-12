@@ -17,12 +17,14 @@ class CardForm extends Component {
         super(props);
         this.state = {
             type_plural: this.props.type  === 'movie' ? 'movies' : this.props.type,
-            doRedirect: false
+            doRedirect: false,
+            refreshModal: false
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSwitchBtn = this.handleSwitchBtn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.overwriteWithApiDetails = this.overwriteWithApiDetails.bind(this);
     }
 
     componentDidMount() {
@@ -53,12 +55,20 @@ class CardForm extends Component {
                 rating_imdb: '',
                 rating_rt: '',
                 rating_fw: '',
+                filmweb_url: '',
                 comments: '',
                 is_watched: false
             });
         }
 
         $('[data-toggle="tooltip"]').tooltip();
+    }
+
+    openImdbModal = () => {
+        this.setState({'refreshModal': true});
+        $('#modalImdb').modal('show').on('shown.bs.modal', () => {
+            this.setState({'refreshModal': false});
+        });
     }
 
     handleChange = async (event) => {
@@ -96,6 +106,7 @@ class CardForm extends Component {
             rating_imdb: this.state.rating_imdb,
             rating_rt: this.state.rating_rt,
             rating_fw: this.state.rating_fw,
+            filmweb_url: this.state.filmweb_url,
             comments: this.state.comments,
             type: this.props.type,
             is_watched: this.state.is_watched,
@@ -148,6 +159,120 @@ class CardForm extends Component {
         }
     }
 
+    processYearData = (str) => {
+        if (!str) {
+            return '';
+        }
+
+        let year = str.substr(0, 4);
+
+        if(year) {
+            try {
+                return parseInt(year);
+            } catch {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    processArrayData = (obj) => {
+        if (obj) {
+            let arr = [];
+            for (let i = 0; i < Object.keys(obj).length; i++) {
+                arr.push(obj[i]);
+            }
+            return arr.join(", ");
+        } else {
+            return "";
+        }
+    }
+
+    processTimeData = (str) => {
+        if(!str) {
+            return '';
+        }
+
+        let time = str.substr(0, str.indexOf('min')).trim().replace(',', '');
+
+        if(time) {
+            try {
+                return parseInt(time);
+            } catch {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    processRatingData = (obj, source) => {
+        if (!obj || !source) {
+            return '';
+        }
+
+        let value = '';
+        if(source === 'fw') {
+            value = obj.toFixed(1);
+        } else {
+            let splitter = null;
+
+            if(source === 'imdb') {
+                source = "Internet Movie Database";
+                splitter = '/';
+            } else if(source =='rt') {
+                source = "Rotten Tomatoes";
+                splitter = '%';
+            }
+
+            for (let i = 0; i < Object.keys(obj).length; i++) {
+                if (obj[i].source === source) {
+                    value = obj[i].value;
+                    if(splitter) {
+                        value = value.substr(0, value.indexOf(splitter));
+                    }
+                    break;
+                }
+            }
+        }
+
+        if(value) {
+            try {
+                return parseFloat(value);
+            } catch {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
+
+    overwriteWithApiDetails = (data, source) => {
+        if(source === 'imdb') {
+            this.setState({
+                title: data.title,
+                year: this.processYearData(data.year),
+                genre: this.processArrayData(data.genre),
+                country: data.country,
+                language: data.language,
+                director: this.processArrayData(data.director),
+                cast: this.processArrayData(data.actors),
+                runtime: this.processTimeData(data.runtime),
+                plot: data.plot,
+                rating_imdb: this.processRatingData(data.ratings, 'imdb'),
+                rating_rt: this.processRatingData(data.ratings, 'rt'),
+                poster: data.poster,
+                imdb_id: data.imdbid
+            });
+        } else if(source === 'filmweb') {
+            this.setState({
+                rating_fw: this.processRatingData(data.rating, 'fw'),
+                filmweb_url: data.link
+            });
+        }
+    }
+
     render() {
         if(this.state.doRedirect) {
             return (
@@ -162,14 +287,12 @@ class CardForm extends Component {
                     {this.props.id && <h2>Update {this.props.type}</h2>}
                     <div className="row">
                         <div className="col-12">
-                            <p>
-                                Complete the form yourself or&nbsp;
-                                <button type="button" className="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
-                                    <FontAwesomeIcon icon={faAngleDoubleDown} /> fetch data from <b>IMDb </b>
-                                    <FontAwesomeIcon icon={faAngleDoubleDown} />
-                                </button>
-                                <ModalImdb title={this.state.title} year={this.state.year} type={this.props.type}/>
-                            </p>
+                            Complete the form yourself or&nbsp;
+                            <button type="button" className="btn btn-warning btn-sm" onClick={this.openImdbModal}>
+                                <FontAwesomeIcon icon={faAngleDoubleDown} /> fetch data from <b>IMDb </b>
+                                <FontAwesomeIcon icon={faAngleDoubleDown} />
+                            </button>
+                            <ModalImdb title={this.state.title} year={this.state.year} type={this.props.type} refreshMe={this.state.refreshModal} overwriteWithApiDetails={this.overwriteWithApiDetails}/>
                         </div>
                     </div>
                     <form onSubmit={this.handleSubmit} className="needs-validation" id="card-form" noValidate>
@@ -182,7 +305,7 @@ class CardForm extends Component {
                                         </div>
                                         <input type="text" className="form-control" id="title" placeholder="enter title.." name="title" onChange={this.handleChange} value={this.state.title} autoFocus required minLength="2"/>
                                         <div className="invalid-feedback">
-                                            Please provide a valid title - minimum 2 characters long.
+                                            Please provide a valid input (minimum 2 characters long).
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +316,7 @@ class CardForm extends Component {
                                         </div>
                                         <input type="number" className="form-control" id="year" placeholder="enter year.." name="year" min="1800" max="2500" onChange={this.handleChange} value={this.state.year}/>
                                         <div className="invalid-feedback">
-                                            Please provide a valid year.
+                                            Please provide a valid input (YYYY).
                                         </div>
                                     </div>
                                 </div>
@@ -242,7 +365,13 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Runtime:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="runtime" placeholder="enter runtime.." name="runtime" onChange={this.handleChange} value={this.state.runtime}/>
+                                        <input type="number" min="1" className="form-control" id="runtime" placeholder="enter runtime.." name="runtime" onChange={this.handleChange} value={this.state.runtime}/>
+                                        <div className="input-group-append">
+                                            <span className="input-group-text">min</span>
+                                        </div>
+                                        <div className="invalid-feedback">
+                                            Please provide a valid input (numbers only).
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -276,7 +405,7 @@ class CardForm extends Component {
                                                     </div>
                                                     <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_imdb" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_imdb}/>
                                                     <div className="invalid-feedback">
-                                                        Please provide a valid rating (0-10).
+                                                        Please provide a valid input (0-10).
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,7 +420,7 @@ class CardForm extends Component {
                                                     </div>
                                                     <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_rt" min="0" max="100" step="1" onChange={this.handleChange} value={this.state.rating_rt}/>
                                                     <div className="invalid-feedback">
-                                                        Please provide a valid rating (0-100).
+                                                        Please provide a valid input (0-100).
                                                     </div>
                                                 </div>
                                             </div>
@@ -306,7 +435,7 @@ class CardForm extends Component {
                                                     </div>
                                                     <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_fw" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_fw}/>
                                                     <div className="invalid-feedback">
-                                                        Please provide a valid rating (0-10).
+                                                        Please provide a valid input (0-10).
                                                     </div>
                                                 </div>
                                             </div>
