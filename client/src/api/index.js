@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://localhost:3018/api',
 })
 
 export const createMovieOrSeries = (payload) => api.post('/user/5eca669c7ae575ae9831c4bb/movie', payload);

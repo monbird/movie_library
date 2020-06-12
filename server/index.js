@@ -11,7 +11,7 @@ const imdbRouter = require('./routes/imdb-router');
 const filmwebRouter = require('./routes/filmweb-router');
 
 const app = express();
-const apiPort = 3000;
+const apiPort = process.env.PORT || 3018;
 
 app.use(bodyParser.urlencoded({ extended: true }))
    .use(bodyParser.json())
