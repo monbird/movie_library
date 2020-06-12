@@ -1,0 +1,77 @@
+{
+  "_from": "filmweb-tools",
+  "_id": "filmweb-tools@0.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-TcjJz9EXfzp/R1EyrAPiYbprrr51oexVVyMNspsAiMmsOKBWRSKQwtd47JYQOZKAAnaavSThuYUR1lSte74GQg==",
+  "_location": "/filmweb-tools",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "filmweb-tools",
+    "name": "filmweb-tools",
+    "escapedName": "filmweb-tools",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/filmweb-tools/-/filmweb-tools-0.1.0.tgz",
+  "_shasum": "d37fd0ca342256727bca30af697178dc2f7d1aee",
+  "_spec": "filmweb-tools",
+  "_where": "/Users/monika/Desktop/workspace/movie_library/server",
+  "author": {
+    "name": "Cezary Bąk",
+    "email": "sekkabak@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sekkabak/filmweb-tools/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.19.0",
+    "crypto-js": "^3.1.9-1"
+  },
+  "deprecated": false,
+  "description": "Biblioteka umożliwiająca korzystanie z api filmwebu",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/crypto-js": "^3.1.43",
+    "@types/jest": "^24.0.18",
+    "babel-loader": "^8.0.4",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.3.3"
+  },
+  "homepage": "https://github.com/sekkabak/filmweb-tools#readme",
+  "keywords": [
+    "Filmweb"
+  ],
+  "license": "MIT",
+  "main": "lib/Filmweb.js",
+  "name": "filmweb-tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sekkabak/filmweb-tools.git"
+  },
+  "scripts": {
+    "build": "npm run build:types && npm run build:js",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps inline",
+    "build:types": "tsc --emitDeclarationOnly",
+    "coverage": "jest --coverage",
+    "test": "jest",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch"
+  },
+  "types": "lib/Filmweb.d.ts",
+  "version": "0.1.0"
+}

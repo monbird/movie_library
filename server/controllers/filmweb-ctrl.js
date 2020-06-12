@@ -1,4 +1,4 @@
-const Filmweb = require('filmweb-tools').default;
+const Filmweb = require('../filmweb-tools').default;
 const filmweb = new Filmweb();
 
 getFilmwebRating = async (req, res) => {
