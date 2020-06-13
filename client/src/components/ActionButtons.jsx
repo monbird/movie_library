@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import $ from "jquery";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +12,9 @@ class AddNewButton extends Component {
     render() {
         return (
             <div>
-                <a href={`/${this.props.type}/create`} className="btn btn-primary"><FontAwesomeIcon icon={faPlus} /></a>
+                <Link to={`/${this.props.type}/create`} className="btn btn-primary">
+                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                </Link>
                 <label>Add new {this.props.type}</label>
             </div>
         );
@@ -37,11 +40,16 @@ class PickRandomButton extends Component {
 }
 
 class UpadateButton extends Component {
+
+    closeAllModals = () => {
+        $('.modal').modal('hide');
+    }
+
     render() {
         return (
-            <a href={`/${this.props.data.type}/edit/${this.props.data._id}`}  type="button" className="btn btn-info w-100">
+            <Link to={`/${this.props.data.type}/edit/${this.props.data._id}`} className="btn btn-info w-100" onClick={this.closeAllModals}>
                 Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
-            </a>
+            </Link>
         );
     }
 }

@@ -10,8 +10,8 @@ import PosterImg from './PosterImg';
 class CardFront extends Component {
     render() {
         return (
-            <div className={`card shadow ${ this.props.highlightedMovieId == this.props.data._id && 'text-white bg-dark'}`}
-            id={`${this.props.highlightedMovieId == this.props.data._id && 'focused-card' }`}>
+            <div className={`card shadow ${ this.props.highlightedMovieId === this.props.data._id && 'text-white bg-dark'}`}
+            id={`${this.props.highlightedMovieId === this.props.data._id && 'focused-card' }`}>
                 <PosterImg className="card-img-top poster" src={this.props.data.poster} alt="Poster"/>
                 <div className="card-body">
                     <Ratings data={this.props.data}/>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import apis from '../api';
 
 import Card from './Card';
@@ -59,7 +60,7 @@ class CardList extends Component {
                             <Card data={movie} key={`key-${movie._id}`} highlightedMovieId={this.state.highlightedMovieId}/>
                         ))}
                         {!showCards && (
-                            <p className="col-12">You don't have any {this.state.type_plural} saved yet. <a href={`/${this.props.type}/create`}>Add a new title.</a></p>
+                            <p className="col-12">You don't have any {this.state.type_plural} saved yet. <Link to={`/${this.props.type}/create`}>Add a new title.</Link></p>
                         )}
                     </div>
                 </div>

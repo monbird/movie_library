@@ -27,7 +27,7 @@ class Ratings extends Component {
                 </div>
                 <div className="col-4">
                     {this.props.data.filmweb_url && (
-                        <a href={this.props.data.filmweb_url} target="_blank" className="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Filmweb">
+                        <a href={this.props.data.filmweb_url} target="_blank" className="btn btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="Filmweb" rel="noopener noreferrer">
                             <img src={icon_fw} alt="filmweb icon" className="rating-icon-img"></img>
                             <span>{!this.props.data.rating_fw && this.props.data.rating_fw !== 0 ? '-' : this.props.data.rating_fw}</span>
                         </a>

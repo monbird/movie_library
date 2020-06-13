@@ -34,7 +34,7 @@ class ModalImdbCard extends Component {
             })
         })
         .catch((error) => {
-            let msg = '👎 ' + 'There was a problem with picking this title! Please try again later.';
+            let msg = '👎 There was a problem with picking this title! Please try again later.';
             toast.error(msg);
         });
     }

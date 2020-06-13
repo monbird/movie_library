@@ -27,7 +27,7 @@ class ModalImdb extends Component {
         }
     }
 
-    componentWillUpdate() {
+    componentDidUpdate() {
         if (this.props.title) {
             apis.getImdbTitles({
                 title: this.props.title,

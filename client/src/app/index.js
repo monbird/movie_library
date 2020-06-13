@@ -12,8 +12,8 @@ import '../style/custom.css';
 
 function App() {
     return (
-        <Router>
-            <NavBar />
+        <Router basename="digital-library">
+            <NavBar/>
             <ToastContainer
                 position="top-right"
                 autoClose={6000}
@@ -26,7 +26,7 @@ function App() {
                 pauseOnHover
             />
             <Switch>
-                {/* <Route path="/" exact component={Home} /> */}
+                <Route path="/" exact component={MoviesList} />
                 <Route path="/movies" exact component={MoviesList} />
                 <Route path="/series" exact component={SeriesList} />
                 <Route path="/movie/create" exact component={MovieCreate} />

@@ -18,7 +18,7 @@ class PosterImg extends Component {
             props.src = poster_placeholder;
         }
 
-        return <img {...props} onError={e => this.setState({ error: true })}/>;
+        return <img {...props} onError={e => this.setState({ error: true })} alt="Poster"/>;
     }
 }
 
