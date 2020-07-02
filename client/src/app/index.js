@@ -8,7 +8,9 @@ import { MoviesList, SeriesList, MovieCreate, SeriesCreate, MovieUpdate, SeriesU
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import '../style/custom.css';
+import 'semantic-ui-css/semantic.min.css';
+import '../style/theme.scss';
+import '../style/custom.scss';
 
 function App() {
     return (

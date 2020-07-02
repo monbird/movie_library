@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import $ from "jquery";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faQuestion, faEye, faEyeSlash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
+import { Button, Icon } from 'semantic-ui-react';
 
 import apis from '../api';
 
 class AddNewButton extends Component {
     render() {
         return (
-            <div>
-                <Link to={`/${this.props.type}/create`} className="btn btn-primary">
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                </Link>
-                <label>Add new {this.props.type}</label>
-            </div>
+            <Button as={Link} to={`/${this.props.type}/create`} animated='vertical' className='semantic-btn add-new-btn w-100 mr-0'>
+                <Button.Content visible>
+                    <Icon name='add'/>
+                </Button.Content>
+                <Button.Content hidden>ADD NEW</Button.Content>
+            </Button>
         );
     }
 }
@@ -31,24 +30,25 @@ class PickRandomButton extends Component {
 
     render() {
         return (
-            <div>
-                <button onClick={this.pickRandomAction}className="btn btn-secondary"><FontAwesomeIcon icon={faQuestion} /></button>
-                <label>Can't decide? Pick for me!</label>
-            </div>
+            <Button onClick={this.pickRandomAction} animated='vertical' className='semantic-btn pick-random-btn w-100 mr-0'>
+                <Button.Content visible>
+                    <Icon name='question' />
+                </Button.Content>
+                <Button.Content hidden>PICK RANDOM</Button.Content>
+            </Button>
         );
     }
 }
 
-class UpadateButton extends Component {
-
+class UpdateButton extends Component {
     closeAllModals = () => {
         $('.modal').modal('hide');
     }
 
     render() {
         return (
-            <Link to={`/${this.props.data.type}/edit/${this.props.data._id}`} className="btn btn-info w-100" onClick={this.closeAllModals}>
-                Edit&nbsp;&nbsp;<FontAwesomeIcon icon={faPencilAlt} />
+            <Link to={`/${this.props.data.type}/edit/${this.props.data._id}`} className="btn btn-success w-100" onClick={this.closeAllModals}>
+                <Icon name='pencil' />&nbsp;Edit
             </Link>
         );
     }
@@ -110,12 +110,13 @@ class SwitchButton extends Component {
         return (
             <BootstrapSwitchButton
                 checked={this.props.data && this.props.data.is_watched}
-                onlabel={[showText && "Watched\u00A0\u00A0", <FontAwesomeIcon icon={faEye} key="fa1" />]}
-                offlabel={[showText && "Unwatched\u00A0\u00A0", <FontAwesomeIcon icon={faEyeSlash} key="fa2" />]}
+                onlabel={[showText && "Watched\u00A0\u00A0", <Icon name='eye' key="fa1" />]}
+                offlabel={[showText && "Unwatched\u00A0\u00A0", <Icon name='eye slash' key="fa2" />]}
                 onChange={this.onChange}
+                height={this.props.height}
             />
         );
     }
 }
 
-export { AddNewButton, PickRandomButton, UpadateButton, DeleteButton, SwitchButton };
+export { AddNewButton, PickRandomButton, UpdateButton, DeleteButton, SwitchButton };

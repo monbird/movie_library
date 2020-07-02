@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from 'semantic-ui-react';
 
-import { UpadateButton, DeleteButton, SwitchButton } from './ActionButtons';
+import { UpdateButton, DeleteButton, SwitchButton } from './ActionButtons';
 import Ratings from './Ratings';
 import PosterImg from './PosterImg';
 
@@ -60,11 +59,11 @@ class CardBack extends Component {
                                         <SwitchButton data={this.props.data} refresher={this.props.refresher} showText={true}/>
                                     </div>
                                     <div className="col-3">
-                                        <UpadateButton data={this.props.data} refresher={this.props.refresher}/>
+                                        <UpdateButton data={this.props.data} refresher={this.props.refresher}/>
                                     </div>
                                     <div className="col-3">
                                         <button type="button" className="btn btn-danger w-100" data-toggle="modal" data-target={`#modal-confirm-${this.props.data._id}`}>
-                                            Delete&nbsp;&nbsp;<FontAwesomeIcon icon={faTrash} />
+                                            <Icon name='trash' />&nbsp;Delete
                                         </button>
                                     </div>
                                 </div>

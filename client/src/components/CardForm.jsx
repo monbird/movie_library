@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import $ from 'jquery';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 
 import icon_imdb from '../images/icon-imdb.png';
@@ -221,7 +220,7 @@ class CardForm extends Component {
             if(source === 'imdb') {
                 source = "Internet Movie Database";
                 splitter = '/';
-            } else if(source ==='rt') {
+            } else if(source === 'rt') {
                 source = "Rotten Tomatoes";
                 splitter = '%';
             }
@@ -282,15 +281,15 @@ class CardForm extends Component {
             )
         } else {
             return (
-                <div className="container">
+                <div className="container cardForm-container">
                     {!this.props.id && <h2>Create new {this.props.type}</h2>}
                     {this.props.id && <h2>Update {this.props.type}</h2>}
                     <div className="row">
                         <div className="col-12">
                             Complete the form yourself or&nbsp;
                             <button type="button" className="btn btn-warning btn-sm" onClick={this.openImdbModal}>
-                                <FontAwesomeIcon icon={faAngleDoubleDown} /> fetch data from <b>IMDb </b>
-                                <FontAwesomeIcon icon={faAngleDoubleDown} />
+                                <Icon name='angle double down' /> fetch data from <b>IMDb </b>
+                                <Icon name='angle double down' />
                             </button>
                             <ModalImdb title={this.state.title} year={this.state.year} type={this.props.type} refreshMe={this.state.refreshModal} overwriteWithApiDetails={this.overwriteWithApiDetails}/>
                         </div>

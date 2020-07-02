@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,600&family=Share+Tech+Mono&display=swap'); // tbc
+
+//  Declare color & font variables
+$color1: #0C1618;
+$color2: #004643;
+$color3: #7D9D8B;
+$color4: #FAF4D3;
+$color5: #D1AC00;
+$color6: #F6BE9A;
+
+$primaryFont: 'Montserrat', sans-serif; // tbc
+$secondaryFont: 'Share Tech Mono', sans; // tbc
+
+body {
+    font-family: $secondaryFont;
+}
+
+//  Navabar 1
+#navbar-toggler {
+    z-index: 444;
+}
+
+//  Navabar 1 - logo
+.navbar-brand {
+    max-width: 170px;
+}
+
+.navbar-brand img {
+    width: 100%;
+}
+
+//  Navabar 1 - links
+.nav-link {
+    font-size: 16px;
+}
+
+//  Navabar 1 - collapse overlay
+.nav-collapse-overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+    overflow-x: hidden;
+    transition: 0.7s;
+
+    ul {
+        padding-left: 16vw;
+        padding-right: 16vw;
+    }
+
+    a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 26px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+
+        &:hover, &:focus {
+            color: #f1f1f1;
+        }
+    }
+
+    .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+    }
+}
+
+.nav-collapse-overlay-content {
+    position: relative;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+//  Navabar 2
+.filters-container {
+    margin-top: 92px;
+    z-index: 443;
+}
+
+//  Navabar 2 - buttons & inputs
+.add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+    font-size: 13px;
+}
+
+.filters-container .ui.button, .filters-container input {
+    height: 38px;
+}
+
+//  Navabar 2 - semantic-iu buttons
+.semantic-btn {
+    background: $color2 !important;
+    color: white !important;
+
+    &:hover {
+        background: #02403E !important;
+    }
+}
+
+//  Navabar 2 - semantic-iu toggle
+.semantic-toggle label {
+    color: white !important;
+    font-size: 15px !important;
+}
+
+.semantic-toggle:not(.checked) label:before {
+    background-color: #BCC9AF !important;
+}
+
+.semantic-toggle:not(.checked):hover label:before {
+    background-color: #A9B49D !important;
+}
+
+.ui.toggle.checkbox input:checked~label:before, .ui.toggle.checkbox input:focus:checked~label:before {
+    background-color: $color5 !important;
+}
+
+.ui.toggle.checkbox:hover input:checked~label:before, .ui.toggle.checkbox:hover input:focus:checked~label:before {
+    background-color: #D5B319 !important;
+}
+
+.ui.toggle.checkbox input:checked~label, .ui.toggle.checkbox input:focus:checked~label  {
+    color: white !important;
+}
+
+// Align semantic-ui toggle button vertically to the middle
+.valign-parent {
+    display: table;
+    height: 38px;
+
+    .valign {
+        display:  table-cell;
+        vertical-align: middle;
+
+        * {
+            margin: 0;
+        }
+    }
+}
+
+// CardList
+.cardList-container {
+    margin-top: 230px;
+}
+
+// CardList - Card
+.card-front {
+    background-color: $color2;
+    max-height: 700px;
+}
+
+.card-img-top.poster {
+    width: 100%;
+    // height: 18vw;
+    max-height: 300px;
+    object-fit: cover;
+    margin: 0 auto;
+} //tbc
+
+.rating-icon-img {
+    width: 100%;
+}
+
+.rating {
+    color: white;
+}
+
+.btn-static {
+    cursor: default;
+}
+
+.card-title {
+    color: $color4;
+    font-size: 16px;
+}
+
+.added-on-info {
+    color: rgb(193, 195, 207) !important;
+    font-size: 11px;
+}
+
+.info-btn {
+    background-color: rgb(238, 165, 58);
+    color: white;
+} // tbc
+
+// Switch btn 'watched/unwatched'
+.switch.btn {
+    width: 100% !important;
+}
+
+// CardBack modals
+.poster-back {
+    width: 100%;
+    height: auto;
+}
+
+.modal:nth-of-type(even) {
+    z-index: 1052 !important;
+}
+
+.modal-backdrop.show:nth-of-type(odd) {
+    z-index: 1051 !important;
+}
+
+// Form add/edit
+.cardForm-container {
+    margin-top: 130px;
+}
+
+.input-group-text {
+    background-color : #d1d1d1;
+    width: 100%;
+}
+
+::placeholder {
+    color: #d1d1d1 !important;
+} //tbc on color
+
+.input-group-prepend:not(.prepend-original) {
+    min-width: 26%;
+}
+
+.rating-icon-form {
+    max-height: 21px;
+}
+
+// Media queries
+@media (max-width: 1199px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 9px;
+    }
+
+    #filter-toggler {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-collapse.show .bottom-ul {
+        padding-bottom: 100vh;
+    } 
+
+    .navbar-brand {
+        max-width: 110px;
+    }
+    
+    .filters-container {
+        margin-top: 67px;
+    }
+
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 11px;
+    }
+
+    #filter-toggler {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 500px) {
+    .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
+        font-size: 10px;
+    }
+
+    #filter-toggler {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .nav-collapse-overlay a {
+        font-size: 18px;
+    }
+    .nav-collapse-overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+@media (min-width: 768px) {
+    #sleek-nav {
+        width: 0% !important;
+    }
+}

@@ -54,10 +54,10 @@ class CardList extends Component {
         return (
             <div>
                 <CardListControllers data={this.state.movies} type={this.props.type} highlightMovie={this.highlightMovie}/>
-                <div className="container">
+                <div className="container cardList-container">
                     <div className="row">
                         {showCards && this.state.movies.map(movie => (
-                            <Card data={movie} key={`key-${movie._id}`} highlightedMovieId={this.state.highlightedMovieId}/>
+                            <Card data={movie} key={`key-${movie._id}`} highlightedMovieId={this.state.highlightedMovieId} />
                         ))}
                         {!showCards && (
                             <p className="col-12">You don't have any {this.state.type_plural} saved yet. <Link to={`/${this.props.type}/create`}>Add a new title.</Link></p>
