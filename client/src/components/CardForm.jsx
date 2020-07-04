@@ -24,6 +24,7 @@ class CardForm extends Component {
         this.handleSwitchBtn = this.handleSwitchBtn.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.overwriteWithApiDetails = this.overwriteWithApiDetails.bind(this);
+        this.preventEnter = this.preventEnter.bind(this);
     }
 
     componentDidMount() {
@@ -80,7 +81,16 @@ class CardForm extends Component {
         await this.setState({'is_watched': checked});
     }
 
+    preventEnter = (event) => {
+        console.log(event.target.tagName);
+        if(event.keyCode == 13 && event.target.tagName !== 'TEXTAREA') {
+            event.preventDefault();
+            return false;
+        }
+    }
+
     handleSubmit = async (event) => {
+
         event.preventDefault();
         event.stopPropagation();
 
@@ -284,17 +294,17 @@ class CardForm extends Component {
                 <div className="container cardForm-container">
                     {!this.props.id && <h2>Create new {this.props.type}</h2>}
                     {this.props.id && <h2>Update {this.props.type}</h2>}
-                    <div className="row">
+                    <div className="row pb-2">
                         <div className="col-12">
                             Complete the form yourself or&nbsp;
-                            <button type="button" className="btn btn-warning btn-sm" onClick={this.openImdbModal}>
+                            <button type="button" className="btn btn-success custom-btn-font" onClick={this.openImdbModal}>
                                 <Icon name='angle double down' /> fetch data from <b>IMDb </b>
                                 <Icon name='angle double down' />
                             </button>
                             <ModalImdb title={this.state.title} year={this.state.year} type={this.props.type} refreshMe={this.state.refreshModal} overwriteWithApiDetails={this.overwriteWithApiDetails}/>
                         </div>
                     </div>
-                    <form onSubmit={this.handleSubmit} className="needs-validation" id="card-form" noValidate>
+                    <form onSubmit={this.handleSubmit} className="needs-validation" id="card-form" noValidate onKeyDown={this.preventEnter}>
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group">
@@ -302,7 +312,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">*Title:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="title" placeholder="enter title.." name="title" onChange={this.handleChange} value={this.state.title || ''} autoFocus required minLength="2"/>
+                                        <input type="text" className="form-control custom-form-input rounded-right" id="title" placeholder="enter title.." name="title" onChange={this.handleChange} value={this.state.title || ''} autoFocus required minLength="2"/>
                                         <div className="invalid-feedback">
                                             Please provide a valid input (minimum 2 characters long).
                                         </div>
@@ -313,7 +323,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Year:</span>
                                         </div>
-                                        <input type="number" className="form-control" id="year" placeholder="enter year.." name="year" min="1800" max="2500" onChange={this.handleChange} value={this.state.year || ''}/>
+                                        <input type="number" className="form-control custom-form-input rounded-right" id="year" placeholder="enter year.." name="year" min="1800" max="2500" onChange={this.handleChange} value={this.state.year || ''}/>
                                         <div className="invalid-feedback">
                                             Please provide a valid input (YYYY).
                                         </div>
@@ -324,7 +334,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Genre:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="genre" placeholder="enter genre.." name="genre" onChange={this.handleChange} value={this.state.genre || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="genre" placeholder="enter genre.." name="genre" onChange={this.handleChange} value={this.state.genre || ''}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -332,7 +342,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Country:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="country" placeholder="enter country.." name="country" onChange={this.handleChange} value={this.state.country || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="country" placeholder="enter country.." name="country" onChange={this.handleChange} value={this.state.country || ''}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -340,7 +350,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Language:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="language" placeholder="enter language.." name="language" onChange={this.handleChange} value={this.state.language || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="language" placeholder="enter language.." name="language" onChange={this.handleChange} value={this.state.language || ''}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -348,7 +358,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Director:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="director" placeholder="enter director.." name="director" onChange={this.handleChange} value={this.state.director || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="director" placeholder="enter director.." name="director" onChange={this.handleChange} value={this.state.director || ''}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -356,7 +366,7 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Cast:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="cast" placeholder="enter cast.." name="cast" onChange={this.handleChange} value={this.state.cast || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="cast" placeholder="enter cast.." name="cast" onChange={this.handleChange} value={this.state.cast || ''}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -364,21 +374,22 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Runtime:</span>
                                         </div>
-                                        <input type="number" min="1" className="form-control" id="runtime" placeholder="enter runtime.." name="runtime" onChange={this.handleChange} value={this.state.runtime || ''}/>
+                                        <input type="text" min="1" className="form-control custom-form-input bottom-border-fix" id="runtime" placeholder="enter runtime.." name="runtime" onChange={this.handleChange} value={this.state.runtime || ''} aria-label="Time in minutes"/>
                                         <div className="input-group-append">
-                                            <span className="input-group-text">min</span>
+                                            <span className="input-group-text rounded-right">min</span>
                                         </div>
                                         <div className="invalid-feedback">
                                             Please provide a valid input (numbers only).
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="form-group">
                                     <div className="input-group">
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Platform:</span>
                                         </div>
-                                        <input type="text" className="form-control" id="platform" placeholder="enter platform.." name="platform" onChange={this.handleChange} value={this.state.platform || ''}/>
+                                        <input type="text" className="form-control custom-form-input" id="platform" placeholder="enter platform.." name="platform" onChange={this.handleChange} value={this.state.platform || ''}/>
                                     </div>
                                 </div>
                             </div>
@@ -388,10 +399,10 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Plot:</span>
                                         </div>
-                                        <textarea className="form-control" id="plot" placeholder="enter plot.." name="plot" onChange={this.handleChange} value={this.state.plot || ''} rows="5"></textarea>
+                                        <textarea className="form-control custom-form-input" id="plot" placeholder="enter plot.." name="plot" onChange={this.handleChange} value={this.state.plot || ''} rows="5"></textarea>
                                     </div>
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group pt-2 pt-md-3">
                                     <p>Ratings:</p>
                                     <div className="row">
                                         <div className="col-12 col-lg-4">
@@ -402,7 +413,7 @@ class CardForm extends Component {
                                                             <img src={icon_imdb} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_imdb" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_imdb || ''}/>
+                                                    <input type="number" className="form-control custom-form-input rounded-right" id="title" placeholder="rating.." name="rating_imdb" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_imdb || ''}/>
                                                     <div className="invalid-feedback">
                                                         Please provide a valid input (0-10).
                                                     </div>
@@ -417,7 +428,7 @@ class CardForm extends Component {
                                                             <img src={icon_rt} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_rt" min="0" max="100" step="1" onChange={this.handleChange} value={this.state.rating_rt || ''}/>
+                                                    <input type="number" className="form-control custom-form-input rounded-right" id="title" placeholder="rating.." name="rating_rt" min="0" max="100" step="1" onChange={this.handleChange} value={this.state.rating_rt || ''}/>
                                                     <div className="invalid-feedback">
                                                         Please provide a valid input (0-100).
                                                     </div>
@@ -432,7 +443,7 @@ class CardForm extends Component {
                                                             <img src={icon_fw} alt="imdb icon" className="rating-icon-form"></img>
                                                         </span>
                                                     </div>
-                                                    <input type="number" className="form-control" id="title" placeholder="rating.." name="rating_fw" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_fw || ''}/>
+                                                    <input type="number" className="form-control custom-form-input rounded-right" id="title" placeholder="rating.." name="rating_fw" min="0" max="10" step="0.1" onChange={this.handleChange} value={this.state.rating_fw || ''}/>
                                                     <div className="invalid-feedback">
                                                         Please provide a valid input (0-10).
                                                     </div>
@@ -446,10 +457,10 @@ class CardForm extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text justify-content-end">Comments:</span>
                                         </div>
-                                        <textarea className="form-control" id="comments" placeholder="enter comments.." name="comments" onChange={this.handleChange} value={this.state.comments || ''} rows="4"></textarea>
+                                        <textarea className="form-control custom-form-input" id="comments" placeholder="enter comments.." name="comments" onChange={this.handleChange} value={this.state.comments || ''} rows="4"></textarea>
                                     </div>
                                 </div>
-                                <div className="form-group">
+                                <div className="form-group pt-2 pt-md-3">
                                     <p>Status:</p>
                                     <div className="input-group">
                                         <SwitchButton showText={true} onChange={this.handleSwitchBtn} data={this.state} />
@@ -457,12 +468,12 @@ class CardForm extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row pt-3">
                             <div className="col-6 col-md-3 offset-md-6">
-                                <Link to={`/${this.state.type_plural}`} className="btn btn-danger w-100">Cancel</Link>
+                                <Link to={`/${this.state.type_plural}`} className="btn btn-danger w-100 custom-form-input ">Cancel</Link>
                             </div>
                             <div className="col-6 col-md-3">
-                                <button type="submit" className="btn btn-primary w-100">Save</button>
+                                <button type="submit" className="btn btn-primary w-100 custom-form-input">Save</button>
                             </div>
                         </div>
                     </form>

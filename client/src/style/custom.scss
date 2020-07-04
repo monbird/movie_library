@@ -4,23 +4,52 @@
 $color1: #0C1618;
 $color2: #004643;
 $color3: #7D9D8B;
+$color3-2: rgb(98, 132, 113);
 $color4: #FAF4D3;
 $color5: #D1AC00;
+$color5-2: rgb(169, 136, 0);
 $color6: #F6BE9A;
 
 $primaryFont: 'Montserrat', sans-serif; // tbc
 $secondaryFont: 'Share Tech Mono', sans; // tbc
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: $secondaryFont;
 }
 
-//  Navabar 1
+#root {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 50px;
+}
+
+// Footer
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+
+    p a:hover {
+        color: $color5;
+        text-decoration: none;
+    }
+}
+
+//  Navbar 1
 #navbar-toggler {
     z-index: 444;
 }
 
-//  Navabar 1 - logo
+//  Navbar 1 - logo
 .navbar-brand {
     max-width: 170px;
 }
@@ -29,12 +58,12 @@ body {
     width: 100%;
 }
 
-//  Navabar 1 - links
+//  Navbar 1 - links
 .nav-link {
     font-size: 16px;
 }
 
-//  Navabar 1 - collapse overlay
+//  Navbar 1 - collapse overlay
 .nav-collapse-overlay {
     height: 100%;
     width: 0;
@@ -81,13 +110,13 @@ body {
     margin-top: 30px;
 }
 
-//  Navabar 2
+//  Navbar 2
 .filters-container {
     margin-top: 92px;
     z-index: 443;
 }
 
-//  Navabar 2 - buttons & inputs
+//  Navbar 2 - buttons & inputs
 .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
     font-size: 13px;
 }
@@ -96,7 +125,7 @@ body {
     height: 38px;
 }
 
-//  Navabar 2 - semantic-iu buttons
+//  Navbar 2 - semantic-iu buttons
 .semantic-btn {
     background: $color2 !important;
     color: white !important;
@@ -106,7 +135,7 @@ body {
     }
 }
 
-//  Navabar 2 - semantic-iu toggle
+//  Navbar 2 - semantic-iu toggle
 .semantic-toggle label {
     color: white !important;
     font-size: 15px !important;
@@ -149,22 +178,88 @@ body {
 
 // CardList
 .cardList-container {
-    margin-top: 230px;
+    padding-top: 230px;
+}
+
+// CardList - improve default Bootstrap to allow for 5 columns in a row (12/5 = 2.4)
+.col-xl-2dot4 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 // CardList - Card
 .card-front {
     background-color: $color2;
-    max-height: 700px;
+    margin-bottom: 45px;
 }
 
+// CardList - Card - Poster
 .card-img-top.poster {
     width: 100%;
-    // height: 18vw;
+    height: 37vh;
     max-height: 300px;
     object-fit: cover;
-    margin: 0 auto;
-} //tbc
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.poster-overlay {
+    position: relative;
+}
+
+.poster-overlay-text-wrapper {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.poster-overlay-text {
+    color: white;
+    font-size: 25px;
+    padding: 16px 32px;
+}
+
+.poster-overlay:hover .poster {
+opacity: 0.3;
+}
+
+.poster-overlay:hover .poster-overlay-text-wrapper  {
+    opacity: 1;
+}
+
+// CardList - Card - Toggler
+.card-front-toggler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $color3 !important;
+
+    &:hover {
+        background-color: $color3-2 !important;
+    }
+}
+
+.card-front-toggler.ui.button.toggle.active {
+    background-color: $color5 !important;
+
+    &:hover {
+        background-color: $color5-2 !important;
+    }
+}
+
+// CardList - Card - Ratings
+.rating-container {
+    padding-left: 9px;
+    padding-right: 9px;
+}
 
 .rating-icon-img {
     width: 100%;
@@ -172,30 +267,36 @@ body {
 
 .rating {
     color: white;
+    font-size: 13px;
 }
 
 .btn-static {
-    cursor: default;
+    cursor: default !important;
 }
 
 .card-title {
     color: $color4;
-    font-size: 16px;
+    font-size: 15px;
+    margin-bottom: 8px !important;
+}
+
+// Truncates Card title to 2 lines
+.block-ellipsis {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 29px;
+    margin: 0 auto;
+    line-height: 1;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .added-on-info {
     color: rgb(193, 195, 207) !important;
     font-size: 11px;
-}
-
-.info-btn {
-    background-color: rgb(238, 165, 58);
-    color: white;
-} // tbc
-
-// Switch btn 'watched/unwatched'
-.switch.btn {
-    width: 100% !important;
 }
 
 // CardBack modals
@@ -214,7 +315,15 @@ body {
 
 // Form add/edit
 .cardForm-container {
-    margin-top: 130px;
+    padding-top: 120px;
+}
+
+.custom-btn-font {
+    font-family: $secondaryFont;
+}
+
+.custom-form-input {
+    height: 36px;
 }
 
 .input-group-text {
@@ -224,14 +333,25 @@ body {
 
 ::placeholder {
     color: #d1d1d1 !important;
-} //tbc on color
+}
 
 .input-group-prepend:not(.prepend-original) {
-    min-width: 26%;
+    min-width: 28%;
 }
 
 .rating-icon-form {
     max-height: 21px;
+}
+
+.bottom-border-fix {
+    border-top-right-radius: 0.0001rem !important;
+    border-bottom-right-radius: 0.0001rem !important;
+}
+
+// General - Switch btn 'watched/unwatched'
+.switch.btn {
+    width: 100% !important;
+    height: 36px;
 }
 
 // Media queries
@@ -281,12 +401,17 @@ body {
     #filter-toggler {
         font-size: 11px;
     }
+
+    .input-group-prepend:not(.prepend-original) {
+        width: 31%;
+    }
 }
 
 @media screen and (max-height: 450px) {
     .nav-collapse-overlay a {
         font-size: 18px;
     }
+
     .nav-collapse-overlay .closebtn {
         font-size: 40px;
         top: 15px;
@@ -297,5 +422,14 @@ body {
 @media (min-width: 768px) {
     #sleek-nav {
         width: 0% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-xl-2dot4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
     }
 }

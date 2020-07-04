@@ -94,7 +94,11 @@ class SwitchButton extends Component {
             this.onChange = (checked) => {
                 let movie = this.props.data;
                 if (movie) {
-                    movie.is_watched = checked;
+                    if(this.props.as_toggle) {
+                        movie.is_watched = !movie.is_watched;
+                    } else {
+                        movie.is_watched = checked;
+                    }
                     apis.updateMovieOrSeries(this.props.data._id, movie);
                     this.props.refresher(movie);
                 }
@@ -105,17 +109,29 @@ class SwitchButton extends Component {
     }
 
     render() {
-        let showText = this.props.showText;
-
-        return (
-            <BootstrapSwitchButton
-                checked={this.props.data && this.props.data.is_watched}
-                onlabel={[showText && "Watched\u00A0\u00A0", <Icon name='eye' key="fa1" />]}
-                offlabel={[showText && "Unwatched\u00A0\u00A0", <Icon name='eye slash' key="fa2" />]}
-                onChange={this.onChange}
-                height={this.props.height}
-            />
-        );
+        if(this.props.as_toggle) {
+            return (
+                <Button toggle size='small' onClick={this.onChange} active={this.props.data && this.props.data.is_watched} className="card-front-toggler">
+                    {this.props.data && this.props.data.is_watched && (
+                        <Icon name='eye' className='mr-0'/>
+                    )}
+                    {!(this.props.data && this.props.data.is_watched) && (
+                        <Icon name='eye slash' className='mr-0'/>
+                    )}
+                </Button>
+            )
+        } else {
+            let showText = this.props.showText;
+            return (
+                <BootstrapSwitchButton
+                    checked={this.props.data && this.props.data.is_watched}
+                    onlabel={[showText && "Watched\u00A0\u00A0", <Icon name='eye' key="fa1" />]}
+                    offlabel={[showText && "Unwatched\u00A0\u00A0", <Icon name='eye slash' key="fa2" />]}
+                    onChange={this.onChange}
+                    height={this.props.height}
+                />
+            )
+        }
     }
 }
 
