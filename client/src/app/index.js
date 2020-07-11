@@ -18,7 +18,7 @@ function App() {
             <div id="content-wrap">
                 <NavBar/>
                 <ToastContainer
-                    position="top-right"
+                    position="bottom-right"
                     autoClose={6000}
                     hideProgressBar={false}
                     newestOnTop={false}

@@ -30,21 +30,21 @@ class CardListControllers extends Component {
                                     <AddNewButton type={this.props.type} />
                                 </div>
                                 <div className="col-6 pl-2">
-                                    <PickRandomButton data={this.props.data} highlightMovie={this.props.highlightMovie}/>
+                                    <PickRandomButton data={this.props.data} highlightMovie={this.props.highlightMovie} disabled={this.props.data.length <= 0}/>
                                 </div>
                             </div>
                         </div>
                         <div className="col-4 col-sm-6 col-md-3 order-md-3 pr-0 pr-sm-3 pr-md-0 pl-0 pl-sm-3">
-                            <Button id="filter-toggler" className="semantic-btn float-right w-100 mr-0" data-toggle="collapse" data-target="#filters">
+                            <Button id="filter-toggler" className="semantic-btn float-right w-100 mr-0" data-toggle="collapse" data-target="#filters" disabled={this.props.data.length <= 0}>
                                 <Icon name='filter' className="d-none d-sm-inline-block"/>FILTER &amp; SORT <Icon name='sort' className="d-none d-sm-inline-block"/>
                             </Button>
                         </div>
                         <div className="col-12 col-md-6 order-md-2 py-3 py-md-0 px-0 px-sm-3">
-                            <Input fluid icon='search' iconPosition='left' placeholder={`Search in ${type_upper}`} />
+                            <Input fluid icon='search' iconPosition='left' placeholder={`Search in ${type_upper}`} disabled={this.props.data.length <= 0}/>
                         </div>
                     </div>
                     <div id="filters" className="collapse row w-100">
-                        <Filters data={this.props.movies}/>
+                        <Filters data={this.props.data} filterCards={this.props.filterCards}/>
                     </div>
                 </div>
             </nav>

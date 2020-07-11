@@ -1,24 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,600&family=Share+Tech+Mono&display=swap'); // tbc
+@import url('https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap');
 
 //  Declare color & font variables
 $color1: #0C1618;
+$color1-2: rgb(24, 32, 34);
 $color2: #004643;
+$color2-2: #10514C;
 $color3: #7D9D8B;
-$color3-2: rgb(98, 132, 113);
 $color4: #FAF4D3;
 $color5: #D1AC00;
-$color5-2: rgb(169, 136, 0);
+$color5-2: rgb(171,141,0);
 $color6: #F6BE9A;
+$color7: rgb(193, 195, 207);
 
-$primaryFont: 'Montserrat', sans-serif; // tbc
-$secondaryFont: 'Share Tech Mono', sans; // tbc
+$primaryFont: 'Mina', sans-serif;
 
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    font-family: $secondaryFont;
+    color: $color4;
+    background-color: $color1;
+    font-family: $primaryFont;
+}
+
+button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5 {
+    font-family: $primaryFont !important;
 }
 
 #root {
@@ -28,21 +35,6 @@ body {
 
 #content-wrap {
     padding-bottom: 80px;
-}
-
-// Footer
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-    text-align: center;
-    padding-top: 35px;
-
-    p a:hover {
-        color: $color5;
-        text-decoration: none;
-    }
 }
 
 //  Navbar 1
@@ -73,7 +65,7 @@ footer {
     top: 0;
     left: 0;
     background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
+    background-color: rgba(0,0,0, 0.92);
     overflow-x: hidden;
     transition: 0.7s;
 
@@ -83,7 +75,7 @@ footer {
     }
 
     a {
-        padding: 8px;
+        margin: 15px 50px;
         text-decoration: none;
         font-size: 26px;
         color: #818181;
@@ -97,8 +89,9 @@ footer {
 
     .closebtn {
         position: absolute;
-        top: 20px;
-        right: 45px;
+        margin: 0 !important;
+        top: 35px;
+        right: 30px;
         font-size: 60px;
     }
 }
@@ -108,16 +101,16 @@ footer {
     top: 20%;
     width: 100%;
     text-align: center;
-    margin-top: 30px;
 }
 
 //  Navbar 2
 .filters-container {
+    position: relative;
     margin-top: 92px;
     z-index: 443;
 }
 
-//  Navbar 2 - buttons & inputs
+//  Navbar 2 - semantic-iu buttons & inputs
 .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
     font-size: 13px;
 }
@@ -126,13 +119,12 @@ footer {
     height: 38px;
 }
 
-//  Navbar 2 - semantic-iu buttons
 .semantic-btn {
     background: $color2 !important;
     color: white !important;
 
     &:hover {
-        background: #02403E !important;
+        background: $color2-2 !important;
     }
 }
 
@@ -162,7 +154,12 @@ footer {
     color: white !important;
 }
 
-// Align semantic-ui toggle button vertically to the middle
+//  Navbar 2 - semantic-iu toggle - remove :hover effect when disabled
+.semantic-toggle input[type="checkbox"]:disabled~label:hover::before {
+    background-color: #BCC9AF !important;
+}
+
+//  Navbar 2 - semantic-iu toggle - align vertically to the middle
 .valign-parent {
     display: table;
     height: 38px;
@@ -177,9 +174,23 @@ footer {
     }
 }
 
+// Semantic-iu dropdowns
+a.ui.label {
+    font-weight: 400;
+    font-size: 13px !important;
+}
+
 // CardList
 .cardList-container {
-    padding-top: 230px;
+    padding-top: 50px;
+}
+
+.no-entries-yet {
+    color: $color6;
+
+    &:hover {
+        color: #f3a777;
+    }
 }
 
 // CardList - improve default Bootstrap to allow for 5 columns in a row (12/5 = 2.4)
@@ -194,7 +205,14 @@ footer {
 // CardList - Card
 .card-front {
     background-color: $color2;
-    margin-bottom: 45px;
+}
+
+// CardList - Card - Highlight picked title
+.border-success {
+    border-color: $color5 !important;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: 0 0 20px $color5;
 }
 
 // CardList - Card - Poster
@@ -217,8 +235,8 @@ footer {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    transform: translate(-58%, -58%);
+    -ms-transform: translate(-58%, -58%);
     text-align: center;
 }
 
@@ -229,11 +247,28 @@ footer {
 }
 
 .poster-overlay:hover .poster {
-opacity: 0.3;
+    opacity: 0.3;
 }
 
 .poster-overlay:hover .poster-overlay-text-wrapper  {
     opacity: 1;
+}
+
+// Dim watched cards
+.card.watched .poster-overlay .poster {
+    opacity: 0.25;
+}
+
+.card.watched .poster-overlay:hover .poster {
+    opacity: 0.6;
+}
+
+.card.watched .card-body *:not(.card-front-toggler) {
+    opacity: 0.8;
+}
+
+.card.watched .card-title {
+    opacity: 0.5 !important;
 }
 
 // CardList - Card - Toggler
@@ -241,18 +276,18 @@ opacity: 0.3;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: $color3 !important;
-
-    &:hover {
-        background-color: $color3-2 !important;
-    }
-}
-
-.card-front-toggler.ui.button.toggle.active {
     background-color: $color5 !important;
 
     &:hover {
         background-color: $color5-2 !important;
+    }
+}
+
+.card-front-toggler.ui.button.toggle.active {
+    background-color: $color1 !important;
+
+    &:hover {
+        background-color: $color1-2 !important;
     }
 }
 
@@ -264,10 +299,12 @@ opacity: 0.3;
 
 .rating-icon-img {
     width: 100%;
+    max-width: 40px;
+    min-width: 22px;
 }
 
 .rating {
-    color: white;
+    color: $color7;
     font-size: 13px;
 }
 
@@ -278,34 +315,18 @@ opacity: 0.3;
 .card-title {
     color: $color4;
     font-size: 15px;
+    height: 2.5em;
+    font-family: $primaryFont;
+    margin-top: 10px !important;
     margin-bottom: 8px !important;
 }
 
-// Truncates Card title to 2 lines
-.block-ellipsis {
-    display: block;
-    display: -webkit-box;
-    max-width: 100%;
-    height: 29px;
-    margin: 0 auto;
-    line-height: 1;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .added-on-info {
-    color: rgb(193, 195, 207) !important;
+    color: $color7 !important;
     font-size: 11px;
 }
 
 // CardBack modals
-.poster-back {
-    width: 100%;
-    height: auto;
-}
-
 .modal:nth-of-type(even) {
     z-index: 1052 !important;
 }
@@ -314,13 +335,24 @@ opacity: 0.3;
     z-index: 1051 !important;
 }
 
+.modal-title {
+    font-size: 16px;
+}
+
+.poster-back {
+    width: 100%;
+    height: auto;
+}
+
+.modal .rating {
+    color: $color4;
+    font-size: 14px;
+    font-weight: 300;
+}
+
 // Form add/edit
 .cardForm-container {
     padding-top: 120px;
-}
-
-.custom-btn-font {
-    font-family: $secondaryFont;
 }
 
 .custom-form-input {
@@ -349,10 +381,55 @@ opacity: 0.3;
     border-bottom-right-radius: 0.0001rem !important;
 }
 
+form .switch.btn .switch-on.btn {
+    border-color: $color7;
+}
+
+// Form add/edit - fetch modal
+.modal-imdb {
+    background-color: $color2;
+}
+
+// Footer
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    padding-top: 35px;
+
+    p a {
+        color: $color6;
+
+        &:hover {
+            color: $color5;
+            text-decoration: none;
+        }
+    }
+}
+
 // General - Switch btn 'watched/unwatched'
 .switch.btn {
-    width: 100% !important;
+    width: 100%;
     height: 36px;
+
+    .switch-handle {
+        background-color: $color7;
+        border-color: $color7;
+    }
+}
+
+// General: truncates Card title to 2 lines
+.block-ellipsis {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 // Media queries
@@ -392,6 +469,10 @@ opacity: 0.3;
     #filter-toggler {
         font-size: 11px;
     }
+
+    .cardForm-container {
+        padding-top: 90px;
+    }
 }
 
 @media (max-width: 500px) {
@@ -406,17 +487,32 @@ opacity: 0.3;
     .input-group-prepend:not(.prepend-original) {
         width: 31%;
     }
+
+    .cardList-container {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-front .rating-container {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .added-on-info {
+        font-size: 9px;
+    }
+
+    .nav-collapse-overlay a {
+        margin: 10px 20px;
+
+    }
 }
 
 @media screen and (max-height: 450px) {
     .nav-collapse-overlay a {
         font-size: 18px;
-    }
-
-    .nav-collapse-overlay .closebtn {
-        font-size: 40px;
-        top: 15px;
-        right: 35px;
+        margin: 5px 50px;
     }
 }
 

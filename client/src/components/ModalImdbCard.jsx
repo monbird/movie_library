@@ -41,12 +41,12 @@ class ModalImdbCard extends Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="card modal-imdb mb-5">
                 <PosterImg className="card-img-top" src={this.props.data.poster} alt="Poster" />
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.data.title}</h5>
+                    <h4>{this.props.data.title}</h4>
                     <p className="card-text">{this.props.data.year}</p>
-                    <button type="button" className="btn btn-primary" onClick={this.fetchTitleDetails}>Pick this</button>
+                    <button type="button" className="btn btn-primary btn-block" onClick={this.fetchTitleDetails}>Pick this</button>
                 </div>
             </div>
         );

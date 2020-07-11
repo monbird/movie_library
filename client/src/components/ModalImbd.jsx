@@ -57,7 +57,7 @@ class ModalImdb extends Component {
 
         return (
             <div className="modal fade" id="modalImdb" tabIndex="-1" role="dialog" aria-labelledby="modalImdbLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
+                <div className="modal-dialog modal-sm" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalImdbLabel">Choose your {this.props.type}</h5>
@@ -70,7 +70,7 @@ class ModalImdb extends Component {
                             {this.props.title && showTitles && this.state.titles.map((title, i) => (
                                 <ModalImdbCard data={title} key={`key-${i}`} overwriteWithApiDetails={this.props.overwriteWithApiDetails}/>
                             ))}
-                            {this.props.title && !showTitles && <p>No matches found! Please refine your search or provide info manually.</p>}
+                            {this.props.title && !showTitles && <p>No titles found! Please refine your search or provide info manually.</p>}
                             {!this.props.title && <p>You must provide a title!</p>}
                         </div>
                         <div className="modal-footer">

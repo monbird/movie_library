@@ -4,31 +4,15 @@ import CardFront from './CardFront';
 import CardBack from './CardBack';
 
 class Card extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: this.props.data
-        };
-
-        this.refresher = this.refresher.bind(this);
-    }
-
-    refresher(data) {
-        this.setState({
-            data: data
-        });
-    }
-
     render() {
-        if(!this.state.data.title) {
+        if(!this.props.data.title) {
             return null;
         } else {
             return (
-                <div className="col-6 col-md-4 col-lg-3 col-xl-2dot4">
+                <div className="col-6 col-md-4 col-lg-3 col-xl-2dot4 pb-5 px-2 px-sm-3">
                     <div>
-                        <CardFront data={this.state.data} refresher={this.refresher} highlightedMovieId={this.props.highlightedMovieId}/>
-                        <CardBack data={this.state.data} refresher={this.refresher}/>
+                        <CardFront data={this.props.data} refresher={this.props.refresher} highlightedMovieId={this.props.highlightedMovieId}/>
+                        <CardBack data={this.props.data} refresher={this.props.refresher}/>
                     </div>
                 </div>
             );

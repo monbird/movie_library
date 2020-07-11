@@ -30,7 +30,7 @@ class PickRandomButton extends Component {
 
     render() {
         return (
-            <Button onClick={this.pickRandomAction} animated='vertical' className='semantic-btn pick-random-btn w-100 mr-0'>
+            <Button onClick={this.pickRandomAction} animated='vertical' className='semantic-btn pick-random-btn w-100 mr-0' disabled={this.props.disabled}>
                 <Button.Content visible>
                     <Icon name='question' />
                 </Button.Content>
@@ -47,7 +47,7 @@ class UpdateButton extends Component {
 
     render() {
         return (
-            <Link to={`/${this.props.data.type}/edit/${this.props.data._id}`} className="btn btn-success w-100" onClick={this.closeAllModals}>
+            <Link to={`/${this.props.data.type}/edit/${this.props.data._id}`} className="btn btn-info w-100" onClick={this.closeAllModals}>
                 <Icon name='pencil' />&nbsp;Edit
             </Link>
         );
@@ -59,11 +59,16 @@ class DeleteButton extends Component {
         apis.deleteMovieOrSeries(this.props.data._id)
         .then((response) => {
             $('.modal').modal('hide');
-            this.props.refresher({});
+            this.props.refresher('delete', {_id: this.props.data._id});
 
             let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
-            let msg = '👍 ' + typeTitle + ' "' + response.data.data.title + '" deleted!';
-            toast.success(msg);
+            let shortenedTitle = this.props.data.title;
+            if (shortenedTitle.length > 35) {
+                shortenedTitle = shortenedTitle.slice(0, 35) + "...";
+            }
+
+            let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" deleted!';
+            toast.dark(msg);
         })
         .catch((error) => {
             let msg = null;
@@ -100,7 +105,7 @@ class SwitchButton extends Component {
                         movie.is_watched = checked;
                     }
                     apis.updateMovieOrSeries(this.props.data._id, movie);
-                    this.props.refresher(movie);
+                    this.props.refresher('update', movie);
                 }
             }
         } else {
@@ -125,10 +130,12 @@ class SwitchButton extends Component {
             return (
                 <BootstrapSwitchButton
                     checked={this.props.data && this.props.data.is_watched}
-                    onlabel={[showText && "Watched\u00A0\u00A0", <Icon name='eye' key="fa1" />]}
-                    offlabel={[showText && "Unwatched\u00A0\u00A0", <Icon name='eye slash' key="fa2" />]}
+                    onlabel={[showText && <Icon name='eye' key="fa1" />, "\u00A0Watched"]}
+                    offlabel={[showText && <Icon name='eye slash' key="fa2" />, "\u00A0Unwatched"]}
                     onChange={this.onChange}
                     height={this.props.height}
+                    onstyle="warning"
+                    offstyle="success"
                 />
             )
         }

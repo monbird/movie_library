@@ -82,7 +82,6 @@ class CardForm extends Component {
     }
 
     preventEnter = (event) => {
-        console.log(event.target.tagName);
         if(event.keyCode == 13 && event.target.tagName !== 'TEXTAREA') {
             event.preventDefault();
             return false;
@@ -131,8 +130,13 @@ class CardForm extends Component {
                     });
     
                     let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
-                    let msg = '👍 ' + typeTitle + ' "' + payload.title + '" updated!';
-                    toast.success(msg);
+                    let shortenedTitle = payload.title;
+                    if (shortenedTitle.length > 35) {
+                        shortenedTitle = shortenedTitle.slice(0, 35) + "...";
+                    }
+
+                    let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" updated!';
+                    toast.dark(msg);
                 })
                 .catch((error) => {
                     let msg = null;
@@ -152,8 +156,13 @@ class CardForm extends Component {
                 });
 
                 let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
-                let msg = '👍 ' + typeTitle + ' "' + payload.title + '" created!';
-                toast.success(msg);
+                let shortenedTitle = payload.title;
+                if (shortenedTitle.length > 35) {
+                    shortenedTitle = shortenedTitle.slice(0, 35) + "...";
+                }
+
+                let msg = '👍 ' + typeTitle + ' "' + shortenedTitle + '" created!';
+                toast.dark(msg);
             })
             .catch(error => {
                 let msg = null;
@@ -297,7 +306,7 @@ class CardForm extends Component {
                     <div className="row pb-2">
                         <div className="col-12">
                             Complete the form yourself or&nbsp;
-                            <button type="button" className="btn btn-success custom-btn-font" onClick={this.openImdbModal}>
+                            <button type="button" className="btn btn-info btn-sm" onClick={this.openImdbModal}>
                                 <Icon name='angle double down' /> fetch data from <b>IMDb </b>
                                 <Icon name='angle double down' />
                             </button>
@@ -473,7 +482,7 @@ class CardForm extends Component {
                                 <Link to={`/${this.state.type_plural}`} className="btn btn-danger w-100 custom-form-input ">Cancel</Link>
                             </div>
                             <div className="col-6 col-md-3">
-                                <button type="submit" className="btn btn-primary w-100 custom-form-input">Save</button>
+                                <button type="submit" className="btn btn-info w-100 custom-form-input">Save</button>
                             </div>
                         </div>
                     </form>
