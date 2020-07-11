@@ -67,7 +67,7 @@ class CardBack extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="row pt-2 d-none d-lg-block">
+                                            <div className="row pt-3 d-none d-lg-block">
                                                 <div className="col-12">
                                                     <p>
                                                         <span className="font-weight-bold">Plot: </span>
