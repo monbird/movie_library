@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
-import $ from "jquery";
+import $ from 'jquery';
 import { toast } from 'react-toastify';
 import { Button, Icon } from 'semantic-ui-react';
 

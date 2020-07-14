@@ -28,13 +28,13 @@ class Links extends Component {
             </ul>,
             <ul className="navbar-nav ml-auto" key='nav-ul-2'>
                 <li className="nav-item my-1 my-md-0 mr-md-2">
-                    <NavLink to="/user/login" className="nav-link disabled btn btn-primary px-md-4" activeClassName="active" onClick={this.props.closeNav}>
+                    <NavLink to="/user/signin" className="nav-link btn btn-primary px-md-4" activeClassName="active" onClick={this.props.closeNav}>
                         Sign In
                     </NavLink>
                 </li>
                 <li className="nav-item my-1 my-md-0 ml-md-2">
-                    <NavLink to="/user/register" className="nav-link disabled btn btn-outline-primary px-md-4"  activeClassName="active" onClick={this.props.closeNav}>
-                        Register
+                    <NavLink to="/user/signout" className="nav-link btn btn-outline-primary px-md-4"  activeClassName="active" onClick={this.props.closeNav}>
+                        Sign out
                     </NavLink>
                 </li>
             </ul>

@@ -300,7 +300,7 @@ class CardForm extends Component {
             )
         } else {
             return (
-                <div className="container cardForm-container">
+                <div className="container pageForm-container">
                     {!this.props.id && <h2>Create new {this.props.type}</h2>}
                     {this.props.id && <h2>Update {this.props.type}</h2>}
                     <div className="row pb-2">
