@@ -4,6 +4,7 @@ import { Dropdown, Checkbox } from 'semantic-ui-react';
 class Filters extends Component {
 
     FILTERS = ['genre', 'country', 'platform']
+
     OPTIONS_SORT_BY = [
         { key: 'alphabet', text: 'Alphabetically', value: 'alphabet', icon: 'sort alphabet down' },
         { key: 'recently_added', text: 'Recently added', value: 'recently_added', icon: 'calendar alternate outline' },
@@ -18,12 +19,19 @@ class Filters extends Component {
 
         this.state = {
             filterOptions: {},
-            anyWatched: false
+            anyWatched: false,
+            activeFilters: {}
         }
 
         this.FILTERS.map((filter) => {
-            this.state.filterOptions[filter] = []
+            this.state.filterOptions[filter] = [];
+            this.state.activeFilters[filter] = [];
         });
+
+        this.state.activeFilters['hide_watched'] = false;
+
+        this.filterChange = this.filterChange.bind(this);
+        this.resetFilters = this.resetFilters.bind(this);
     }
 
     collectFilterOptions(filter) {
@@ -49,7 +57,7 @@ class Filters extends Component {
         return filterOptions;
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         let filterOptions = {};
 
         for (let i = 0; i < this.FILTERS.length; i++) {
@@ -75,17 +83,39 @@ class Filters extends Component {
                 anyWatched: anyWatched
             })
         }
+
+        if(!prevProps.doResetFilters && this.props.doResetFilters) {
+            this.resetFilters();
+        }
     }
 
-    // filterChange() {
-    //     let filterOptions = {
+    filterChange(event, data) {
+        let filter = data.id.split('filter-')[1];
+        let currentActiveFilters = this.state.activeFilters;
 
-    //     };
-    //     for (let i = 0; i < this.FILTERS.length; i++) {
-    //         filterOptions
-    //     }
-    //     //filterCards
-    // }
+        currentActiveFilters[filter] = data.toggle ? data.checked : data.value;
+        this.setState({
+            activeFilters: currentActiveFilters
+        })
+
+        this.props.refresher('filter', currentActiveFilters);
+    }
+
+    resetFilters() {
+        let emptyFilters = {};
+
+        this.FILTERS.map((filter) => {
+            emptyFilters[filter] = [];
+        });
+
+        emptyFilters['hide_watched'] = false;
+
+        this.setState({
+            activeFilters: emptyFilters
+        });
+
+        this.props.refresher('filter', emptyFilters, true);
+    }
 
     render() {
         return (
@@ -93,22 +123,22 @@ class Filters extends Component {
                 <div className="row">
                     <div className="col-12 col-md-6 col-lg-4 px-0 px-sm-3 px-md-0 pr-md-3">
                         <div className="form-group">
-                            <Dropdown placeholder='Genre' fluid multiple selection clearable={true} options={this.state.filterOptions.genre} disabled={this.state.filterOptions.genre.length <= 0} onChange={this.filterChange}/>
+                            <Dropdown id='filter-genre' placeholder='Genre' fluid multiple selection clearable={true} options={this.state.filterOptions.genre} disabled={this.state.filterOptions.genre.length <= 0} onChange={this.filterChange} value={this.state.activeFilters.genre}/>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 col-lg-4 px-0 px-sm-3 px-md-0 pl-md-3 pr-lg-3">
                         <div className="form-group">
-                            <Dropdown placeholder='Country' fluid multiple selection clearable={true}  options={this.state.filterOptions.country} disabled={this.state.filterOptions.country.length <= 0} onChange={this.filterChange}/>
+                            <Dropdown id='filter-country' placeholder='Country' fluid multiple selection clearable={true}  options={this.state.filterOptions.country} disabled={this.state.filterOptions.country.length <= 0} onChange={this.filterChange} value={this.state.activeFilters.country}/>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 col-lg-4 px-0 px-sm-3 px-md-0 pr-md-3 pl-lg-3 pr-lg-0">
                         <div className="form-group">
-                            <Dropdown placeholder='Platform' fluid multiple selection clearable={true}  options={this.state.filterOptions.platform} disabled={this.state.filterOptions.platform.length <= 0} onChange={this.filterChange}/>
+                            <Dropdown id='filter-platform' placeholder='Platform' fluid multiple selection clearable={true}  options={this.state.filterOptions.platform} disabled={this.state.filterOptions.platform.length <= 0} onChange={this.filterChange} value={this.state.activeFilters.platform}/>
                         </div>
                     </div>
                     <div className="col-6 col-lg-4 valign-parent pr-0 pl-1 pl-sm-3 pl-lg-0">
                         <div className="form-group valign">
-                            <Checkbox toggle label='Hide watched' className="semantic-toggle" disabled={!this.state.anyWatched}/>
+                            <Checkbox id='filter-hide_watched' toggle label='Hide watched' className="semantic-toggle" disabled={!this.state.anyWatched} onChange={this.filterChange} checked={this.state.activeFilters.hide_watched}/>
                         </div>
                     </div>
                     <div className="col-6 col-lg-4 offset-md-6 offset-lg-4 px-0 pr-sm-3 pr-md-0 pl-md-3">
