@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import apis from '../api';
+import { Icon } from 'semantic-ui-react';
 
+import apis from '../api';
 import Card from './Card';
 import CardListControllers from './CardListControllers';
 
@@ -145,10 +146,10 @@ class CardList extends Component {
                             );
                         })}
                         {anyCard && !showCards && (
-                            <p className="col-12">None of your {this.state.type_plural} meet selected criteria. <button onClick={this.resetFilters} className="no-entries-yet">Reset your filters.</button></p>
+                            <p className="col-12">None of your {this.state.type_plural} meet the selected criteria <Icon name='angle double right' /><a href="#" onClick={this.resetFilters} className="no-cards">Reset your filters </a><Icon name='angle double left' /></p>
                         )}
                         {!anyCard && (
-                            <p className="col-12">You don't have any {this.state.type_plural} saved yet. <Link to={`/${this.props.type}/create`} className="no-entries-yet">Add a new title.</Link></p>
+                            <p className="col-12">You don't have any {this.state.type_plural} saved yet <Icon name='angle double right' /><Link to={`/${this.props.type}/create`} className="no-cards">Add a new title </Link><Icon name='angle double left' /></p>
                         )}
                     </div>
                 </div>

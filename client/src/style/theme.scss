@@ -239,12 +239,12 @@ $color6: #F6BE9A;
 
 .btn-outline-primary {
     color: $color6;
-    background-color: transparent;
+    background-color: $color1;
     background-image: none;
     border-color: $color6;
 }
 .btn-outline-primary:hover {
-    color: #111 !important;
+    color: $color1 !important;
     background-color: $color6;
     border-color: $color6;
 }
