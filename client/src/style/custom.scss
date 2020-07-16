@@ -21,10 +21,10 @@ html {
 body {
     color: $color4;
     background-color: $color1;
-    font-family: $primaryFont;
+    font-family: $primaryFont !important;
 }
 
-button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5 {
+button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5, .ui.message .header {
     font-family: $primaryFont !important;
 }
 
@@ -342,8 +342,12 @@ a.ui.label {
 }
 
 // Form add/edit
-.custom-form-input {
+.cardForm-elements {
     height: 36px;
+}
+
+.padding-fix {
+    padding-top: 7px !important;
 }
 
 .input-group-text {
@@ -368,18 +372,14 @@ a.ui.label {
     border-bottom-right-radius: 0.0001rem !important;
 }
 
-form .switch.btn .switch-on.btn {
-    border-color: $color7;
+.invalid-feedback {
+    color: #8B0000;
+    font-size: 87%;
 }
 
 // Form add/edit - fetch modal
 .modal-imdb {
     background-color: $color2;
-}
-
-// UserSignIn page
-.signin-form {
-    background: $color3 !important;
 }
 
 // UserSignIn page - vertical dividers
@@ -398,6 +398,11 @@ form .switch.btn .switch-on.btn {
 i.signup.icon {
     color: white;
     opacity: 1 !important;
+}
+
+// UserSignIn & Reg page - error messages
+.ui.pointing.above.prompt.label {
+    font-size: 0.79rem;
 }
 
 // Footer
@@ -447,7 +452,7 @@ footer {
     padding-top: 140px;
 }
 
-// Semantic-iu buttons
+// General: semantic-iu buttons
 .semantic-btn {
     background: $color2 !important;
     color: white !important;
@@ -531,6 +536,15 @@ footer {
     .nav-collapse-overlay a {
         margin: 10px 20px;
 
+    }
+
+    #card-form {
+        margin-top: 5px;
+        padding: 11px !important;
+
+        & * {
+            font-size: 13px !important;
+        }
     }
 }
 
