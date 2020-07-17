@@ -156,18 +156,20 @@ class Filters extends Component {
                             <Dropdown placeholder='Sort by' fluid selection clearable={true} options={this.OPTIONS_SORT_BY} disabled={this.props.data.length <= 0}/>
                         </div>
                     </div>
-                    <div className="col-7 col-sm-6 col-lg-4 pl-1 pl-sm-3 pl-md-0 pl-lg-3 valign-parent">
+                    <div className="col-7 col-sm-6 col-lg-4 pl-1 pl-sm-3 pl-md-0 pl-lg-3 mb-2 mb-lg-0 valign-parent">
                         <div className="form-group valign">
                             <Checkbox id='filter-hide_watched' toggle label='Hide watched' className="semantic-toggle" disabled={!this.state.anyWatched} onChange={this.filterChange} checked={this.state.activeFilters.hide_watched}/>
                         </div>
                     </div>
-                    <div className="col-5 col-sm-6 col-lg-4 pr-0 pr-sm-3 pr-md-0">
-                        <div className="form-group float-right valign-parent">
+                    <div className="col-5 col-sm-6 col-lg-4 pr-0 pr-sm-3 pr-md-0 mb-2 mb-lg-0">
+                        <div className="float-right valign-parent">
+                            <div className="form-group valign">
                             {!filtersAreEmpty && (
-                                <a href="#" id='clearFilters' className='valign' onClick={this.props.resetFilters}>
+                                <a href="#" id='clearFilters' onClick={this.props.resetFilters}>
                                     <Icon name='remove'/>&nbsp;Clear filters
                                 </a>
                             )}
+                            </div>
                         </div>
                     </div>
                 </div>
