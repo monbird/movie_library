@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Checkbox } from 'semantic-ui-react';
+import { Dropdown, Checkbox, Icon } from 'semantic-ui-react';
 
 class Filters extends Component {
 
@@ -32,6 +32,7 @@ class Filters extends Component {
 
         this.filterChange = this.filterChange.bind(this);
         this.resetFilters = this.resetFilters.bind(this);
+        this.areFiltersEmpty = this.areFiltersEmpty.bind(this);
     }
 
     collectFilterOptions(filter) {
@@ -117,7 +118,21 @@ class Filters extends Component {
         this.props.refresher('filter', emptyFilters, true);
     }
 
+    areFiltersEmpty() {
+        let self = this;
+        let activeFiltersEmpty = Object.keys(this.state.activeFilters).every(function(filter) {
+            if(filter === 'hide_watched') {
+                return !self.state.activeFilters[filter];
+            } else {
+                return self.state.activeFilters[filter].length < 1;
+            }
+        });
+        return this.props.searchPhrase.length < 1 && activeFiltersEmpty;
+    }
+
     render() {
+        let filtersAreEmpty =  this.areFiltersEmpty();
+
         return (
             <div className="col-12 py-2">
                 <div className="row">
@@ -136,14 +151,23 @@ class Filters extends Component {
                             <Dropdown id='filter-platform' placeholder='Platform' fluid multiple selection clearable={true}  options={this.state.filterOptions.platform} disabled={this.state.filterOptions.platform.length <= 0} onChange={this.filterChange} value={this.state.activeFilters.platform}/>
                         </div>
                     </div>
-                    <div className="col-6 col-lg-4 valign-parent pr-0 pl-1 pl-sm-3 pl-lg-0">
+                    <div className="col-12 col-md-6 col-lg-4 px-0 px-sm-3 pr-md-0 pl-lg-0 pr-lg-3">
+                        <div className="form-group">
+                            <Dropdown placeholder='Sort by' fluid selection clearable={true} options={this.OPTIONS_SORT_BY} disabled={this.props.data.length <= 0}/>
+                        </div>
+                    </div>
+                    <div className="col-7 col-sm-6 col-lg-4 pl-1 pl-sm-3 pl-md-0 pl-lg-3 valign-parent">
                         <div className="form-group valign">
                             <Checkbox id='filter-hide_watched' toggle label='Hide watched' className="semantic-toggle" disabled={!this.state.anyWatched} onChange={this.filterChange} checked={this.state.activeFilters.hide_watched}/>
                         </div>
                     </div>
-                    <div className="col-6 col-lg-4 offset-md-6 offset-lg-4 px-0 pr-sm-3 pr-md-0 pl-md-3">
-                        <div className="form-group">
-                            <Dropdown placeholder='Sort by' fluid selection clearable={true} options={this.OPTIONS_SORT_BY} disabled={this.props.data.length <= 0}/>
+                    <div className="col-5 col-sm-6 col-lg-4 pr-0 pr-sm-3 pr-md-0">
+                        <div className="form-group float-right valign-parent">
+                            {!filtersAreEmpty && (
+                                <a href="#" id='clearFilters' className='valign' onClick={this.props.resetFilters}>
+                                    <Icon name='remove'/>&nbsp;Clear filters
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -23,8 +23,22 @@ class AddNewButton extends Component {
 class PickRandomButton extends Component {
     pickRandomAction = () => {
         let titles = this.props.data;
-        let randomNo = [Math.floor(Math.random() * titles.length)];
-        let randomTitle = titles[randomNo];
+        let unpickedTitles = null;
+
+        if(this.props.highlightedMovieId) {
+            unpickedTitles = titles.filter((title) => {
+                return title._id !== this.props.highlightedMovieId;
+            });
+
+            if(unpickedTitles.length < 1) {
+                unpickedTitles = titles;
+            }
+        } else {
+            unpickedTitles = titles;
+        }
+
+        let randomNo = Math.floor(Math.random() * unpickedTitles.length);
+        let randomTitle = unpickedTitles[randomNo];
         this.props.highlightMovie(randomTitle._id);
     }
 

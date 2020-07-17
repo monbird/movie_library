@@ -138,7 +138,8 @@ button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5, .ui.m
 }
 
 .ui.toggle.checkbox:hover input:checked~label:before, .ui.toggle.checkbox:hover input:focus:checked~label:before {
-    background-color: #D5B319 !important;
+    background-color: $color5-2 !important;
+
 }
 
 .ui.toggle.checkbox input:checked~label, .ui.toggle.checkbox input:focus:checked~label  {
@@ -169,6 +170,16 @@ button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5, .ui.m
 a.ui.label {
     font-weight: 400;
     font-size: 13px !important;
+}
+
+// Clear filters btn
+#clearFilters {
+    font-size: 15px;
+    color: rgb(74, 80, 82);
+
+    &:hover {
+        color: $color1;
+    }
 }
 
 // CardList
@@ -476,6 +487,8 @@ footer {
 
     #filter-toggler {
         font-size: 12px;
+        padding-left: 0px;
+        padding-right: 0px;
     }
 }
 
@@ -493,10 +506,6 @@ footer {
     }
 
     .add-new-btn .hidden.content, .pick-random-btn .hidden.content {
-        font-size: 11px;
-    }
-
-    #filter-toggler {
         font-size: 11px;
     }
 
@@ -533,6 +542,10 @@ footer {
         font-size: 9px;
     }
 
+    #filter-toggler {
+        font-size: 9px;
+    }
+
     .nav-collapse-overlay a {
         margin: 10px 20px;
 
@@ -545,6 +558,14 @@ footer {
         & * {
             font-size: 13px !important;
         }
+    }
+
+    .semantic-toggle label {
+        font-size: 14px !important;
+    }
+
+    #clearFilters {
+        font-size: 14px;
     }
 }
 

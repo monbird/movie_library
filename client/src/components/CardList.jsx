@@ -8,7 +8,9 @@ import CardListControllers from './CardListControllers';
 
 class CardList extends Component {
 
-    REFRESHER_ALLOWED_ACTIONS = ['delete', 'update', 'filter']
+    REFRESHER_ALLOWED_ACTIONS = ['delete', 'update', 'filter', 'search']
+
+    SEARCH_KEYS = ['title', 'year', 'genre', 'country', 'language', 'director', 'cast', 'platform', 'plot', 'comments']
 
     constructor(props) {
         super(props);
@@ -17,8 +19,10 @@ class CardList extends Component {
             pieces_visible: [],
             highlightedMovieId: null,
             doResetFilters: false,
-            activeFilters: {}
+            activeFilters: {},
+            searchPhrase: '',
         };
+
         if(this.props.type) {
             this.state.type_plural = this.props.type === 'movie' ? 'movies' : this.props.type;
         }
@@ -26,6 +30,7 @@ class CardList extends Component {
         this.highlightMovie = this.highlightMovie.bind(this);
         this.refresher = this.refresher.bind(this);
         this.resetFilters = this.resetFilters.bind(this);
+        this.searchThrough = this.searchThrough.bind(this);
     }
 
     componentDidMount = async () => {
@@ -79,21 +84,36 @@ class CardList extends Component {
             if(resetFiltersDone) {
                 stateUpdate.doResetFilters = false;
             }
+        } else if(action === 'search') {
+            stateUpdate.searchPhrase = data.phrase;
         }
 
         let activeFilters = stateUpdate.activeFilters || this.state.activeFilters;
+        let searchPhrase = this.state.searchPhrase;
+        if(stateUpdate.searchPhrase || stateUpdate.searchPhrase === '') {
+            searchPhrase = stateUpdate.searchPhrase;
+        }
         let newPiecesVisible = [];
+
+
         for (let i = 0; i < this.state.pieces_all.length; i++) {
             let include = true;
             let thisPiece = this.state.pieces_all[i];
+
+            if(searchPhrase) {
+                include = this.searchThrough(thisPiece, searchPhrase);
+            }
+
             Object.keys(activeFilters).map(filter => {
-                let filterVal = activeFilters[filter];
-                if(filter === 'hide_watched' && include) {
-                    include = !thisPiece.is_watched || !filterVal;
-                } else if(filterVal.length > 0 && include) {
-                    include = filterVal.every(function(filterEntry) {
-                        return thisPiece[filter].toLowerCase().indexOf(filterEntry.toLowerCase()) >= 0;
-                    });
+                if(include) {
+                    let filterVal = activeFilters[filter];
+                    if(filter === 'hide_watched') {
+                        include = !thisPiece.is_watched || !filterVal;
+                    } else if(filterVal.length > 0) {
+                        include = filterVal.every(function(filterEntry) {
+                            return thisPiece[filter].toLowerCase().indexOf(filterEntry.toLowerCase()) >= 0;
+                        });
+                    }
                 }
             });
             if(include) {
@@ -107,6 +127,19 @@ class CardList extends Component {
         }
     }
 
+    searchThrough(piece, phrase) {
+        let words = phrase.toLowerCase().split(' ').filter(function(word) {
+            return word.length > 2;
+        });
+        let self = this;
+
+        return words.every(function(word) {
+            return self.SEARCH_KEYS.some(function(searchKey) {
+                return piece[searchKey].toString().toLowerCase().indexOf(word) >= 0;
+            });
+        });
+    }
+
     highlightMovie = (movieId) => {
         this.setState({
             highlightedMovieId: movieId
@@ -114,7 +147,7 @@ class CardList extends Component {
     }
 
     componentDidUpdate() {
-        function scrollTo(element, yOffset = -130){
+        function scrollTo(element, yOffset = -130) {
             const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({top: y, behavior: 'smooth'});
         }
@@ -127,7 +160,8 @@ class CardList extends Component {
 
     resetFilters() {
         this.setState({
-            doResetFilters: true
+            doResetFilters: true,
+            searchPhrase: ''
         })
     }
 
@@ -137,7 +171,7 @@ class CardList extends Component {
 
         return (
             <div>
-                <CardListControllers pieces_all={this.state.pieces_all} pieces_visible={this.state.pieces_visible} type={this.props.type} highlightMovie={this.highlightMovie} refresher={this.refresher} doResetFilters={this.state.doResetFilters}/>
+                <CardListControllers pieces_all={this.state.pieces_all} pieces_visible={this.state.pieces_visible} type={this.props.type} highlightMovie={this.highlightMovie} refresher={this.refresher} doResetFilters={this.state.doResetFilters} highlightedMovieId={this.state.highlightedMovieId} resetFilters={this.resetFilters}/>
                 <div className="container cardList-container px-4 px-sm-3">
                     <div className="row">
                         {showCards && this.state.pieces_visible.map(piece => {
