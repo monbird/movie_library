@@ -106,7 +106,7 @@ button:not(.close), input, optgroup, select, textarea, h1, h2, h3, h4, h5, .ui.m
 //  Navbar 2
 .filters-container {
     position: relative;
-    margin-top: 92px;
+    padding-top: 114px !important;
     z-index: 443;
 }
 
@@ -502,7 +502,7 @@ footer {
     }
     
     .filters-container {
-        margin-top: 67px;
+        padding-top: 89px !important;
     }
 
     .add-new-btn .hidden.content, .pick-random-btn .hidden.content {

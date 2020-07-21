@@ -43,7 +43,7 @@ class Links extends Component {
                 </li>
                 <li className="nav-item my-1 my-md-0 ml-md-2">
                     <NavLink to="/user/signout" className="nav-link btn btn-outline-primary px-md-4"  activeClassName="active" onClick={this.props.closeNav}>
-                        Sign out
+                        Sign Out
                     </NavLink>
                 </li>
             </ul>
