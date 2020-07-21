@@ -82,7 +82,7 @@ class CardForm extends Component {
     }
 
     preventEnter = (event) => {
-        if(event.keyCode == 13 && event.target.tagName !== 'TEXTAREA') {
+        if(event.keyCode === 13 && event.target.tagName !== 'TEXTAREA') {
             event.preventDefault();
             return false;
         }
