@@ -6,8 +6,8 @@ class Filters extends Component {
     FILTERS = ['genre', 'country', 'platform']
 
     OPTIONS_SORT_BY = [
-        { key: 'alphabet', text: 'Alphabetically', value: 'alphabet', icon: 'sort alphabet down' },
         { key: 'recently_added', text: 'Recently added', value: 'recently_added', icon: 'calendar alternate outline' },
+        { key: 'alphabet', text: 'Alphabetically', value: 'alphabet', icon: 'sort alphabet down' },
         { key: 'year_newest', text: 'Year - newest', value: 'year_newest', icon: 'sort numeric descending' },
         { key: 'year_oldest', text: 'Year - oldest', value: 'year_oldest', icon: 'sort numeric ascending' },
         { key: 'rating_highest', text: 'Rating - highest', value: 'rating_highest', icon: 'sort amount down' },
@@ -20,7 +20,10 @@ class Filters extends Component {
         this.state = {
             filterOptions: {},
             anyWatched: false,
-            activeFilters: {}
+            activeFilters: {
+                hide_watched: false
+            },
+            sortBy: 'recently_added'
         }
 
         this.FILTERS.map((filter) => {
@@ -28,8 +31,7 @@ class Filters extends Component {
             this.state.activeFilters[filter] = [];
         });
 
-        this.state.activeFilters['hide_watched'] = false;
-
+        this.sortByChange = this.sortByChange.bind(this);
         this.filterChange = this.filterChange.bind(this);
         this.resetFilters = this.resetFilters.bind(this);
         this.areFiltersEmpty = this.areFiltersEmpty.bind(this);
@@ -90,6 +92,18 @@ class Filters extends Component {
         }
     }
 
+    sortByChange(event, data) {
+        let currentSortBy = this.state.sortBy;
+        let newSortBy = data.value;
+
+        if(currentSortBy !== newSortBy) {
+            this.setState({
+                sortBy: newSortBy
+            })
+            this.props.refresher('sort', {sortBy: newSortBy});
+        }
+    }
+
     filterChange(event, data) {
         let filter = data.id.split('filter-')[1];
         let currentActiveFilters = this.state.activeFilters;
@@ -103,16 +117,17 @@ class Filters extends Component {
     }
 
     resetFilters() {
-        let emptyFilters = {};
+        let emptyFilters = {
+            hide_watched: false
+        };
 
         this.FILTERS.map((filter) => {
             emptyFilters[filter] = [];
         });
 
-        emptyFilters['hide_watched'] = false;
-
         this.setState({
-            activeFilters: emptyFilters
+            activeFilters: emptyFilters,
+            sortBy: 'recently_added'
         });
 
         this.props.refresher('filter', emptyFilters, true);
@@ -127,7 +142,9 @@ class Filters extends Component {
                 return self.state.activeFilters[filter].length < 1;
             }
         });
-        return this.props.searchPhrase.length < 1 && activeFiltersEmpty;
+        let searchPhraseEmpty = this.props.searchPhrase.length < 1;
+        let sortByEmpty = this.state.sortBy === 'recently_added';
+        return sortByEmpty && searchPhraseEmpty && activeFiltersEmpty;
     }
 
     render() {
@@ -153,7 +170,7 @@ class Filters extends Component {
                     </div>
                     <div className="col-12 col-md-6 col-lg-4 px-0 px-sm-3 pr-md-0 pl-lg-0 pr-lg-3">
                         <div className="form-group">
-                            <Dropdown placeholder='Sort by' fluid selection clearable={true} options={this.OPTIONS_SORT_BY} disabled={this.props.data.length <= 0}/>
+                            <Dropdown placeholder='Sort by' fluid selection options={this.OPTIONS_SORT_BY} disabled={this.props.data.length <= 0} value={this.state.sortBy} onChange={this.sortByChange}/>
                         </div>
                     </div>
                     <div className="col-7 col-sm-6 col-lg-4 pl-1 pl-sm-3 pl-md-0 pl-lg-3 mb-2 mb-lg-0 valign-parent">

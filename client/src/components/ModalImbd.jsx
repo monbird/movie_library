@@ -16,7 +16,9 @@ class ModalImdb extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(nextProps.refreshMe && (nextProps.title !== this.myState.title || nextProps.year !== this.myState.year) || JSON.stringify(this.state.titles) !== JSON.stringify(nextState.titles)) {
+        let titleOrYearDiff = nextProps.title !== this.myState.title || nextProps.year !== this.myState.year;
+        let titlesDiff = JSON.stringify(this.state.titles) !== JSON.stringify(nextState.titles);
+        if(nextProps.refreshMe && titleOrYearDiff || titlesDiff) {
             this.myState = {
                 title: this.props.title,
                 year: this.props.year

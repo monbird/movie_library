@@ -8,19 +8,65 @@ import CardListControllers from './CardListControllers';
 
 class CardList extends Component {
 
-    REFRESHER_ALLOWED_ACTIONS = ['delete', 'update', 'filter', 'search']
+    REFRESHER_ALLOWED_ACTIONS = ['delete', 'update', 'filter', 'search', 'sort']
 
     SEARCH_KEYS = ['title', 'year', 'genre', 'country', 'language', 'director', 'cast', 'platform', 'plot', 'comments']
+
+    SORT_FUNCS = {
+        recently_added: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                if (p1.createdAt < p2.createdAt) {
+                    return 1;
+                }
+                if (p1.createdAt > p2.createdAt) {
+                    return -1;
+                }
+                return 0;
+            });
+        },
+        alphabet: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                if (p1.title.toLowerCase() < p2.title.toLowerCase()) {
+                    return -1;
+                }
+                if (p1.title.toLowerCase() > p2.title.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            });
+        },
+        year_newest: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                return p2.year - p1.year;
+            });
+        },
+        year_oldest: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                return (p1.year || 99999) - (p2.year || 99999);
+            });
+        },
+        rating_highest: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                return p2.rating_imdb - p1.rating_imdb;
+            });
+        },
+        rating_lowest: (pieces) => {
+            return pieces.sort((p1, p2) => {
+                return (p1.rating_imdb || 9999) - (p2.rating_imdb || 9999);
+            });
+        }
+    }
 
     constructor(props) {
         super(props);
         this.state = {
-            pieces_all: [],
-            pieces_visible: [],
+            piecesAll: [],
+            piecesVisible: [],
             highlightedMovieId: null,
             doResetFilters: false,
             activeFilters: {},
             searchPhrase: '',
+            sortBy: 'recently_added'
         };
 
         if(this.props.type) {
@@ -31,6 +77,7 @@ class CardList extends Component {
         this.refresher = this.refresher.bind(this);
         this.resetFilters = this.resetFilters.bind(this);
         this.searchThrough = this.searchThrough.bind(this);
+        this.sortPieces = this.sortPieces.bind(this);
     }
 
     componentDidMount = async () => {
@@ -43,8 +90,8 @@ class CardList extends Component {
         if (method) {
             await apis[method]().then(pieces => {
                 this.setState({
-                    pieces_all: pieces.data.data,
-                    pieces_visible: pieces.data.data
+                    piecesAll: pieces.data.data,
+                    piecesVisible: pieces.data.data
                 });
             })
         }
@@ -59,26 +106,11 @@ class CardList extends Component {
         let stateUpdate = {};
 
         if(action === 'update' || action === 'delete') {
-            let newPieces = [];
-            for (let i = 0; i < this.state.pieces_all.length; i++) {
-                let newPiece = null;
-                if(this.state.pieces_all[i]._id === data._id) {
-                    if(action === 'update') {
-                        newPiece = data;
-                    } else if(action === 'delete') {
-                        continue;
-                    }
-                } else {
-                    newPiece = this.state.pieces_all[i];
-                }
-                newPieces.push(newPiece);
-            }
-            stateUpdate.pieces_all = newPieces;
+            stateUpdate.piecesAll = this.updateOrDelete(data, action);
         }
 
         if(action === 'filter') {
             this.highlightMovie(null);
-
             stateUpdate.activeFilters = data;
 
             if(resetFiltersDone) {
@@ -86,25 +118,55 @@ class CardList extends Component {
             }
         } else if(action === 'search') {
             stateUpdate.searchPhrase = data.phrase;
+        } else if(action === 'sort') {
+            this.highlightMovie(null);
+            stateUpdate.sortBy =  data.sortBy;
         }
 
         let activeFilters = stateUpdate.activeFilters || this.state.activeFilters;
         let searchPhrase = this.state.searchPhrase;
-        if(stateUpdate.searchPhrase || stateUpdate.searchPhrase === '') {
-            searchPhrase = stateUpdate.searchPhrase;
+        let piecesAll = stateUpdate.piecesAll || this.state.piecesAll;
+
+        let piecesVisible = this.filterAndSearch(piecesAll, activeFilters, searchPhrase);
+
+        let sortBy = stateUpdate.sortBy || this.state.sortBy;
+        stateUpdate.piecesVisible = this.sortPieces(piecesVisible, sortBy);
+
+        if(Object.keys(stateUpdate).length > 0) {
+            this.setState(stateUpdate);
         }
-        let newPiecesVisible = [];
+    }
 
+    updateOrDelete(data, action) {
+        let newPieces = [];
+        for (let i = 0; i < this.state.piecesAll.length; i++) {
+            let newPiece = null;
+            if(this.state.piecesAll[i]._id === data._id) {
+                if(action === 'update') {
+                    newPiece = data;
+                } else if(action === 'delete') {
+                    continue;
+                }
+            } else {
+                newPiece = this.state.piecesAll[i];
+            }
+            newPieces.push(newPiece);
+        }
+        return newPieces;
+    }
 
-        for (let i = 0; i < this.state.pieces_all.length; i++) {
+    filterAndSearch(piecesAll, activeFilters, searchPhrase) {
+        let filteredPieces = [];
+
+        for (let i = 0; i < piecesAll.length; i++) {
             let include = true;
-            let thisPiece = this.state.pieces_all[i];
+            let thisPiece = piecesAll[i];
 
             if(searchPhrase) {
                 include = this.searchThrough(thisPiece, searchPhrase);
             }
 
-            Object.keys(activeFilters).map(filter => {
+            Object.keys(activeFilters).map((filter) => {
                 if(include) {
                     let filterVal = activeFilters[filter];
                     if(filter === 'hide_watched') {
@@ -116,15 +178,16 @@ class CardList extends Component {
                     }
                 }
             });
+
             if(include) {
-                newPiecesVisible.push(thisPiece);
+                filteredPieces.push(thisPiece);
             }
         }
-        stateUpdate.pieces_visible = newPiecesVisible;
+        return filteredPieces;
+    }
 
-        if(Object.keys(stateUpdate).length > 0) {
-            this.setState(stateUpdate);
-        }
+    sortPieces(pieces, sortBy) {
+        return this.SORT_FUNCS[sortBy](pieces);
     }
 
     searchThrough(piece, phrase) {
@@ -135,15 +198,17 @@ class CardList extends Component {
 
         return words.every(function(word) {
             return self.SEARCH_KEYS.some(function(searchKey) {
-                return piece[searchKey].toString().toLowerCase().indexOf(word) >= 0;
+                return (piece[searchKey] || '').toString().toLowerCase().indexOf(word) >= 0;
             });
         });
     }
 
-    highlightMovie = (movieId) => {
-        this.setState({
-            highlightedMovieId: movieId
-        });
+    highlightMovie(movieId) {
+        if(this.state.highlightedMovieId !== movieId) {
+            this.setState({
+                highlightedMovieId: movieId
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -161,20 +226,21 @@ class CardList extends Component {
     resetFilters() {
         this.setState({
             doResetFilters: true,
-            searchPhrase: ''
+            searchPhrase: '',
+            sortBy: 'recently_added'
         })
     }
 
     render() {
-        const showCards = this.state.pieces_visible.length > 0;
-        const anyCard = this.state.pieces_all.length > 0;
+        const showCards = this.state.piecesVisible.length > 0;
+        const anyCard = this.state.piecesAll.length > 0;
 
         return (
             <div>
-                <CardListControllers pieces_all={this.state.pieces_all} pieces_visible={this.state.pieces_visible} type={this.props.type} highlightMovie={this.highlightMovie} refresher={this.refresher} doResetFilters={this.state.doResetFilters} highlightedMovieId={this.state.highlightedMovieId} resetFilters={this.resetFilters}/>
+                <CardListControllers piecesAll={this.state.piecesAll} piecesVisible={this.state.piecesVisible} type={this.props.type} highlightMovie={this.highlightMovie} refresher={this.refresher} doResetFilters={this.state.doResetFilters} highlightedMovieId={this.state.highlightedMovieId} resetFilters={this.resetFilters}/>
                 <div className="container cardList-container px-4 px-sm-3">
                     <div className="row">
-                        {showCards && this.state.pieces_visible.map(piece => {
+                        {showCards && this.state.piecesVisible.map(piece => {
                             return (
                             <Card data={piece} key={`key-${piece._id}`} highlightedMovieId={this.state.highlightedMovieId} refresher={this.refresher}/>
                             );
