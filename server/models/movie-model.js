@@ -13,7 +13,7 @@ const Movie = new Schema(
         cast: {type: String},
         director: {type: String},
         comments: {type: String},
-        type: {type: String, enum: ['movie', 'series']},
+        type: {type: String, required: true, enum: ['movie', 'series']},
         is_watched: {type: Boolean},
         imdb_id: {type: String},
         rating_imdb: {type: Number, min: 0, max: 10},
