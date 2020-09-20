@@ -141,7 +141,8 @@ class CardForm extends Component {
                 .catch((error) => {
                     let msg = null;
                     if(error.response && error.response.data) {
-                        msg = '👎 Could not update ' + payload.type + ": " + error.response.data.message;
+                        let reason = error.response.data.message || error.response.data;
+                        msg = '👎 Could not update ' + payload.type + ": " + reason;
                     } else {
                         let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
                         msg = '👎 ' + typeTitle + ' not updated!';
@@ -167,7 +168,8 @@ class CardForm extends Component {
             .catch(error => {
                 let msg = null;
                 if(error.response && error.response.data) {
-                    msg = '👎 Could not add ' + payload.type + ": " + error.response.data.message;
+                    let reason = error.response.data.message || error.response.data;
+                    msg = '👎 Could not add ' + payload.type + ": " + reason;
                 } else {
                     let typeTitle = payload.type.charAt(0).toUpperCase() + payload.type.slice(1);
                     msg = '👎 ' + typeTitle + ' not created!';

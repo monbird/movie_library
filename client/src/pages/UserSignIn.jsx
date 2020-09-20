@@ -1,93 +1,169 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Divider, Form, Grid, Segment, Icon, Message } from 'semantic-ui-react';
-import { toast } from 'react-toastify';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import {
+    Button,
+    Divider,
+    Form,
+    Grid,
+    Segment,
+    Icon,
+    Message,
+} from "semantic-ui-react";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { signInUser } from "../actions/authActions";
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
+            email: null,
             password: null,
-            usernameError: null,
-            passwordError: null
+            errors: {},
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        if (this.props.location.pathname === '/user/signout') {
-            let msg = '👍 You have successfully signed out!';
-            toast.dark(msg);
+        // If logged in and user navigates to Login page, should redirect them to Movies
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/movies");
         }
     }
 
-    handleSubmit = async (event) => {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/movies");
+        }
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors,
+            });
+        }
+    }
 
+    inputChange = (event) => {
+        this.setState({ [event.target.id]: event.target.value });
+    };
+
+    handleSubmit = async (event) => {
         event.preventDefault();
         event.stopPropagation();
 
-        if(this.state.username) {
-            this.setState({usernameError: null});
-        } else {
-            this.setState({usernameError: 'Please provide your username.'});
-        }
-        if(this.state.password) {
-            this.setState({passwordError: null});
-        } else {
-            this.setState({passwordError: 'Please provide your password.'});
-        }
-    }
+        let payload = {
+            email: this.state.email,
+            password: this.state.password,
+        };
+
+        await this.props.signInUser(payload);
+    };
 
     render() {
+        const { errors } = this.state;
+
         return (
             <div className="container pageForm-container">
                 <h2>Welcome to Digital&nbsp;Library</h2>
-                <p><Icon name='angle double right'/>your online collection of movies, series &amp; many more to come.</p>
+                <p>
+                    <Icon name="angle double right" />
+                    your online collection of movies, series &amp; many more to
+                    come.
+                </p>
                 <Segment placeholder className="bg-secondary">
-                    <Grid columns={2} relaxed='very' stackable>
+                    <Grid columns={2} relaxed="very" stackable>
                         <Grid.Column>
-                            <Form error action="#" className="py-4 py-md-0" noValidate onSubmit={this.handleSubmit}>
+                            <Form
+                                error
+                                className="py-4 py-md-0"
+                                noValidate
+                                onSubmit={this.handleSubmit}
+                            >
                                 <Message
-                                    // hidden
+                                    hidden={!errors.nonField}
                                     size="small"
                                     error
-                                    header='Account not found!'
-                                    content='Account with provided username or email address not found. Please check your entry and try again.'
+                                    header="Account not found!"
+                                    content={errors.nonField}
                                 />
                                 <Form.Input
-                                    icon='user'
-                                    iconPosition='left'
-                                    label='Username'
-                                    placeholder='Username'
+                                    id="email"
+                                    icon="mail"
+                                    iconPosition="left"
+                                    label="Email address"
+                                    placeholder="Email address"
                                     autoFocus
-                                    error={this.state.usernameError && { content: this.state.usernameError, pointing: 'above' }}
-                                    onChange={(e) => this.setState({username: e.target.value})}
+                                    error={
+                                        errors.email && {
+                                            content: errors.email,
+                                            pointing: "above",
+                                        }
+                                    }
+                                    onChange={this.inputChange}
                                 />
                                 <Form.Input
-                                    icon='lock'
-                                    iconPosition='left'
-                                    label='Password'
-                                    type='password'
-                                    placeholder='Password'
-                                    error={this.state.passwordError && { content: this.state.passwordError, pointing: 'above' }}
-                                    onChange={(e) => this.setState({password: e.target.value})}
+                                    id="password"
+                                    icon="lock"
+                                    iconPosition="left"
+                                    label="Password"
+                                    type="password"
+                                    placeholder="Password"
+                                    error={
+                                        errors.password && {
+                                            content: errors.password,
+                                            pointing: "above",
+                                        }
+                                    }
+                                    onChange={this.inputChange}
                                 />
-                                <Button type="submit" content='Sign In' className='semantic-btn' />
+                                <Button
+                                    type="submit"
+                                    content="Sign In"
+                                    className="semantic-btn"
+                                />
                             </Form>
-                            <Divider horizontal className='d-md-none'>Or</Divider>
+                            <Divider horizontal className="d-md-none">
+                                Or
+                            </Divider>
                         </Grid.Column>
-                        <Grid.Column verticalAlign='middle'>
-                            <Button as={Link} to='/user/register' content='Register' icon='signup' size='big' className='semantic-btn d-none d-md-block' />
-                            <Button as={Link} to='/user/register' content='Register' icon='signup' size='large' className='semantic-btn d-md-none mb-4' />
+                        <Grid.Column verticalAlign="middle">
+                            <Button
+                                as={Link}
+                                to="/user/register"
+                                content="Register"
+                                icon="signup"
+                                size="big"
+                                className="semantic-btn d-none d-md-block"
+                            />
+                            <Button
+                                as={Link}
+                                to="/user/register"
+                                content="Register"
+                                icon="signup"
+                                size="large"
+                                className="semantic-btn d-md-none mb-4"
+                            />
                         </Grid.Column>
                     </Grid>
-                    <Divider vertical className='d-none d-md-block'>Or</Divider>
+                    <Divider vertical className="d-none d-md-block">
+                        Or
+                    </Divider>
                 </Segment>
             </div>
         );
     }
 }
 
-export default SignIn;
+SignIn.propTypes = {
+    signInUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors,
+});
+
+export default connect(mapStateToProps, { signInUser })(SignIn);

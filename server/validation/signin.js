@@ -24,6 +24,6 @@ function validateSignInInput(data) {
         errors,
         isValid: isEmpty(errors)
     };
-};
+}
 
 module.exports = validateSignInInput;

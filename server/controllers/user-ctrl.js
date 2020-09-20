@@ -39,11 +39,28 @@ createUser = async (req, res) => {
 
                     user.save()
                     .then(() => {
-                        return res.status(201).json({
-                            success: true,
-                            message: 'User created!',
-                            data: user
-                        });
+
+                        const payload = {
+                            id: user.id,
+                            username: user.username
+                        };
+
+                        // Sign token
+                        jwt.sign(
+                            payload,
+                            process.env.PASSPORT_SECRET,
+                            {
+                                expiresIn: 30 * 24 * 60 * 60 // 1 month in seconds
+                            },
+                            (err, token) => {
+                                res.status(201).json({
+                                    success: true,
+                                    message: 'User created!',
+                                    data: user,
+                                    token: "Bearer " + token
+                                });
+                            }
+                        );
                     })
                     .catch(error => {
                         return res.status(400).json({
@@ -177,7 +194,7 @@ signIn = async (req, res) => {
                 success: false,
                 message: 'Could not sign in',
                 errors: {
-                    email: "Email not found"
+                    nonField: "Email address or password incorrect"
                 }
             });
         }
