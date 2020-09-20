@@ -87,7 +87,8 @@ class DeleteButton extends Component {
         .catch((error) => {
             let msg = null;
             if(error.response && error.response.data) {
-                msg = '👎 Could not delete ' + this.props.data.type + ': ' + error.response.data.message;
+                let reason = error.response.data.message || error.response.data;
+                msg = '👎 Could not delete ' + this.props.data.type + ': ' + reason;
             } else {
                 let typeTitle = this.props.data.type.charAt(0).toUpperCase() + this.props.data.type.slice(1);
                 msg = '👎 ' + typeTitle + ' not deleted!';

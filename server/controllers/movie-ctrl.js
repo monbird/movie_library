@@ -6,12 +6,12 @@ const moment = require('moment');
 createMovieOrSeries = async (req, res) => {
     const body = req.body;
 
-    await User.findOne({_id: req.params.user_id}, (error, user) => {
-        if (error || !user) {
+    await User.findOne({_id: req.params.user_id}, (errors, user) => {
+        if (errors || !user) {
             return res.status(404).json({
                 success: false,
                 message: 'User not found!',
-                error
+                errors: errors
             });
         }
 
@@ -27,11 +27,11 @@ createMovieOrSeries = async (req, res) => {
                     data: movie
                 });
             })
-            .catch(error => {
+            .catch(errors => {
                 return res.status(400).json({
                     success: false,
                     message: 'Validation failed!',
-                    error
+                    errors: errors.errors
                 });
             });
     });

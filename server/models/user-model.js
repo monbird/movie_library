@@ -22,9 +22,7 @@ const User = new Schema(
         },
         password: {
             type: String,
-            required: 'Password is required',
-            minlength: 5,
-            maxlength: 40,
+            required: 'Password is required'
         },
         movies: {
             type: [Movie]

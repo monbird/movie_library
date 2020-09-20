@@ -22,8 +22,8 @@ function validateRegisterInput(data) {
         errors.email = "Email is required";
     } else if (!Validator.isEmail(data.email)) {
         errors.email = "Email is invalid";
-    } else if (!Validator.isLength(data.email, { max: 60 })) {
-        errors.username = "Username must be less than 60 characters long";
+    } else if (!Validator.isLength(data.email, { min: 5, max: 60 })) {
+        errors.email = "Email must be between 5 and 60 characters long";
     }
 
     // Password checks
