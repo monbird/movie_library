@@ -228,7 +228,7 @@ signIn = async (req, res) => {
                     success: false,
                     message: 'Could not sign in',
                     errors: {
-                        password: "Password incorrect"
+                        nonField: "Email address or password incorrect"
                     }
                 });
             }
