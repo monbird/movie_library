@@ -12,7 +12,7 @@ import {
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { signInUser } from "../actions/authActions";
+import { signInUser, setCurrentPath, clearErrors } from "../actions/authActions";
 
 class SignIn extends Component {
     constructor(props) {
@@ -27,6 +27,9 @@ class SignIn extends Component {
     }
 
     componentDidMount() {
+        this.props.setCurrentPath(this.props.location.pathname);
+        this.props.clearErrors();
+
         // If logged in and user navigates to Login page, should redirect them to Movies
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/movies");
@@ -157,8 +160,10 @@ class SignIn extends Component {
 
 SignIn.propTypes = {
     signInUser: PropTypes.func.isRequired,
+    setCurrentPath: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -166,4 +171,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors,
 });
 
-export default connect(mapStateToProps, { signInUser })(SignIn);
+export default connect(mapStateToProps, { signInUser, setCurrentPath, clearErrors })(SignIn);

@@ -26,6 +26,8 @@ class Links extends Component {
 
     render() {
         let isAuthenticated = this.props.auth.isAuthenticated;
+        let currentPath = this.props.auth.currentPath;
+        let onSignIn = currentPath && currentPath.endsWith('/signin');
 
         let ul1 = isAuthenticated ? (
             <ul className="navbar-nav mr-auto mt-2 mt-md-0" key="nav-ul-1">
@@ -89,7 +91,7 @@ class Links extends Component {
         return [
             ul1,
             <ul className="navbar-nav ml-auto" key="nav-ul-2">
-                {!isAuthenticated && (
+                {!isAuthenticated && !onSignIn && (
                     <li className="nav-item my-1 my-md-0 mr-md-2">
                         <NavLink
                             to="/user/signin"
@@ -120,11 +122,11 @@ class Links extends Component {
 
 Links.propTypes = {
     signOutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
+    auth: state.auth
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {

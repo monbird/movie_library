@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Message } from "semantic-ui-react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { registerUser } from "../actions/authActions";
+import { registerUser, setCurrentPath, clearErrors} from "../actions/authActions";
 
 class Register extends Component {
     constructor(props) {
@@ -19,11 +19,14 @@ class Register extends Component {
     }
 
     componentDidMount() {
+        this.props.setCurrentPath(this.props.location.pathname);
+        this.props.clearErrors();
+
         // If logged in and user navigates to Register page, should redirect them to Movies
         if (this.props.auth.isAuthenticated) {
           this.props.history.push("/movies");
         }
-      }
+    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
@@ -152,8 +155,10 @@ class Register extends Component {
 
 Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
+    setCurrentPath: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -161,4 +166,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors,
 });
 
-export default connect(mapStateToProps, { registerUser })(Register);
+export default connect(mapStateToProps, { registerUser, setCurrentPath, clearErrors })(Register);

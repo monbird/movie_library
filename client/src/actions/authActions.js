@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER, USER_LOADING, SET_CURRENT_PATH } from "./types";
 import { toast } from "react-toastify";
 
 import apis from "../api";
@@ -74,3 +74,17 @@ export const signOutUser = () => (dispatch) => {
     let msg = "👍 You have successfully signed out!";
     toast.dark(msg);
 };
+
+// Set current path
+export const setCurrentPath = (currentPath) => {
+    return {
+        type: SET_CURRENT_PATH,
+        payload: currentPath
+    };
+};
+
+export const clearErrors = () => {
+    return {
+        type: CLEAR_ERRORS
+    };
+}
